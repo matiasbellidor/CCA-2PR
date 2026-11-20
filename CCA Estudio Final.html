@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCA · Estudio final: resolvé el parcial</title>
+<style>
+:root{--bg:#0e1117;--p1:#161b24;--p2:#1d2430;--ink:#e8ebf0;--mut:#98a2b3;--line:#2b3340;--acc:#5aa2ff;--acc2:#6ee7b7;--warn:#fbbf24;--bad:#f87171;--good:#86efac;--code:#0a0d13}
+@media (prefers-color-scheme:light){:root{--bg:#f6f7f9;--p1:#fff;--p2:#eef1f5;--ink:#161a22;--mut:#5b6575;--line:#d6dbe3;--acc:#1f6feb;--acc2:#0f8a63;--warn:#b7791f;--bad:#c53030;--good:#1f8a45;--code:#f1f3f7}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:70px}
+header.top{padding:18px 16px 12px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--p2),var(--bg))}
+header.top h1{margin:0;font-size:19px}header.top p{margin:4px 0 0;color:var(--mut);font-size:13.5px}
+.wrap{max-width:980px;margin:0 auto;padding:0 14px}
+nav.tabs{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+nav.tabs .in{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 10px}
+nav.tabs button{flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--mut);padding:8px 12px;border-radius:9px;font-size:13.5px;cursor:pointer;font-weight:600}
+nav.tabs button:hover{color:var(--ink);background:var(--p1)}
+nav.tabs button.on{color:var(--ink);background:var(--p2);border-color:var(--line)}
+section.tab{display:none;padding:18px 0}section.tab.on{display:block}
+h2{font-size:21px;margin:0 0 4px;line-height:1.25}h3{font-size:16px;margin:20px 0 6px;color:var(--acc2)}h4{margin:12px 0 4px;font-size:14.5px}
+.sub{color:var(--mut);font-size:13.5px;margin:0 0 14px}
+.card{background:var(--p1);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 14px}
+.card.key{border-left:4px solid var(--acc)}.card.warn{border-left:4px solid var(--warn)}.card.good{border-left:4px solid var(--good)}.card.bad{border-left:4px solid var(--bad)}
+.lbl{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--acc);margin-bottom:5px}
+.card.warn .lbl{color:var(--warn)}.card.good .lbl{color:var(--good)}.card.bad .lbl{color:var(--bad)}
+p{margin:0 0 10px}ul{margin:4px 0 12px;padding-left:20px}li{margin:0 0 5px}
+b,strong{color:var(--ink)}code,.m{background:var(--code);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:13.5px;font-family:"SF Mono",Consolas,Menlo,monospace;color:var(--acc2)}
+pre.ans{position:relative;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0 14px;overflow-x:auto;font:13.5px/1.55 "SF Mono",Consolas,Menlo,monospace;white-space:pre;color:var(--ink)}
+button.cp{position:absolute;top:6px;right:6px;font-size:11.5px;padding:3px 9px;border-radius:7px;border:1px solid var(--line);background:var(--p2);color:var(--mut);cursor:pointer}
+.tw{overflow-x:auto;margin:6px 0 14px}
+table.t{border-collapse:collapse;width:100%;font-size:13.5px}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+table.t th{background:var(--p2);color:var(--acc2);font-size:12px}
+table.t td.n,table.t th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.hl td{background:color-mix(in srgb,var(--acc) 16%,transparent)}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font-size:14px;cursor:pointer}
+.btn.g{background:var(--p2);color:var(--ink);border:1px solid var(--line)}
+.btn.ok{background:var(--good);color:#06240f}.btn.no{background:var(--bad);color:#2a0606}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.pill{display:inline-block;background:var(--p2);border:1px solid var(--line);border-radius:20px;padding:3px 11px;font-size:12.5px;color:var(--mut);margin:0 5px 5px 0;cursor:pointer}
+.pill.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+input,textarea,select{background:var(--code);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:14px "SF Mono",Consolas,Menlo,monospace;max-width:100%}
+textarea{width:100%;min-height:130px}label{font-size:13px;color:var(--mut)}
+input[type=number]{width:96px}input[type=range]{padding:0;width:200px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+.cm{border-collapse:collapse;margin:6px 0}.cm td,.cm th{border:1px solid var(--line);padding:8px 14px;text-align:center;font-size:14px}
+.cm td.tp,.cm td.tn{background:color-mix(in srgb,var(--good) 20%,transparent)}.cm td.fp,.cm td.fn{background:color-mix(in srgb,var(--bad) 20%,transparent)}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0}
+.kv div{background:var(--p2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12.5px;color:var(--mut)}
+.kv div b{display:block;font-size:18px;color:var(--ink)}
+details{background:var(--p1);border:1px solid var(--line);border-radius:12px;margin:0 0 10px}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--acc)}details[open]>summary::before{content:"▾ "}
+details .in{padding:0 16px 12px}
+.sec{display:none}.sec.on{display:block}
+svg.ch{background:var(--code);border:1px solid var(--line);border-radius:10px;max-width:100%}
+svg.ch text{fill:var(--mut);font-size:9px}
+.vf-q{font-size:17px;font-weight:600;margin:6px 0 12px}
+.big{font-size:15.5px}.mut{color:var(--mut)}.ok{color:var(--good)}.no{color:var(--bad)}.k{color:var(--acc2);font-weight:600}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.flow span{background:var(--p2);border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:13px}
+.flow i{color:var(--mut);font-style:normal}
+.foot{color:var(--mut);font-size:12px;border-top:1px solid var(--line);margin-top:26px;padding-top:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<h1>Computación Científica Actuarial · Estudio final</h1>
+<p>Parcial real resuelto · recetas · calculadoras · generador de exámenes · teoría · V/F · fórmulas · palacio</p>
+</div></header>
+<nav class="tabs"><div class="in" id="tabbar">
+<button data-t="exam" class="on">🎯 El examen</button>
+<button data-t="res">✅ Resuelto</button>
+<button data-t="rec">🛠 Recetas</button>
+<button data-t="calc">🧮 Calculadoras</button>
+<button data-t="gen">🎲 Generador</button>
+<button data-t="teo">📚 Teoría</button>
+<button data-t="vf">✔ V/F</button>
+<button data-t="fx">📐 Fórmulas</button>
+<button data-t="pal">🏠 Palacio</button>
+</div></nav>
+<main class="wrap">
+<!-- ============ EL EXAMEN ============ -->
+<section class="tab on" id="exam">
+<h2>Lo que te tomaron y cómo resolverlo</h2>
+<p class="sub">2do Parcial · 2C 2026 · Cátedra Del Rosso · 100 pts · aprobar con 4 = 60% correcto y completo</p>
+
+<div class="card key"><div class="lbl">El patrón (lo más importante)</div>
+<p>El parcial <b>repite los ejemplos de clase con datos cambiados</b>. En el Ej. 3 los stumps y los α son <b>exactamente los del PDF</b> de AdaBoost (0,973 · 1,28 · 0,92 · 0,92 · 1 · 1,2). En el Ej. 4 el árbol da los <b>mismos números que “Cool as Ice”</b> (TGI 0,405 y 0,214). Si rehacés los ejemplos de clase y les cambiás los datos, ya entrenaste el parcial.</p></div>
+
+<div class="tw"><table class="t">
+<tr><th>Ej.</th><th>Pts</th><th>Tema</th><th>Qué pedían</th></tr>
+<tr><td>1</td><td class="n">20</td><td><b>Métricas</b> (práctico)</td><td>Matriz de confusión con threshold 0,6 · accuracy, precision, recall · costo FN = 10×FP → qué hacer con el umbral · qué métrica priorizar · curva para TPR vs FPR</td></tr>
+<tr><td>2</td><td class="n">20</td><td><b>V/F</b> con justificación</td><td>Overfitting · feature engineering · DL ⊂ ML · profundidad del árbol · PCA</td></tr>
+<tr><td>3</td><td class="n">30</td><td><b>AdaBoost</b></td><td>6 stumps con α: clasificación de cada uno → voto ponderado → suma → riesgo alto o bajo</td></tr>
+<tr><td>4</td><td class="n">30</td><td><b>Árboles</b></td><td>Raíz con Gini sobre tabla de 7 filas · cómo seguir construyendo · cuándo usar pruning</td></tr>
+</table></div>
+
+<div class="card warn"><div class="lbl">Reglas del examen</div>
+<ul>
+<li>Tinta azul o negra: pensá en borrador mental y escribí limpio. Tachá en vez de borrar.</li>
+<li><b>Notación de clase</b>: TP/FP/TN/FN, TPR/FPR, <code>G</code>/<code>TGI</code>, <code>ε</code>, <code>α = ½·ln((1−ε)/ε)</code>, <code>F(x) = Σ α·f(x)</code>.</li>
+<li>Siempre: <b>1) fórmula · 2) reemplazo con números · 3) resultado · 4) interpretación en una frase</b>. Sin la interpretación el ejercicio queda incompleto.</li>
+<li>El 60% es “correcto y completo”: mejor 3 ejercicios perfectos que 4 a medias.</li>
+</ul></div>
+
+<h3>Qué estudiar, en orden de prioridad</h3>
+<div class="tw"><table class="t">
+<tr><th>#</th><th>Tema</th><th>Por qué</th><th>Dónde</th></tr>
+<tr><td>1</td><td>Árboles: Gini, TGI, continuar, pruning</td><td>30 pts + el profe dijo “repasar bien”</td><td>🧮 Gini · 📚 Árboles</td></tr>
+<tr><td>2</td><td>AdaBoost: voto, α, reponderación</td><td>30 pts + el profe dijo “repasar bien”</td><td>🧮 AdaBoost · 📚 AdaBoost</td></tr>
+<tr><td>3</td><td>Métricas: matriz, umbral, costos, ROC/PR</td><td>20 pts · el profe: “entra práctico”</td><td>🧮 Métricas · 📚 Métricas</td></tr>
+<tr><td>4</td><td>V/F de teoría (overfitting, FE, DL, PCA, RF)</td><td>20 pts de “regalo” si sabés los criterios</td><td>✔ V/F</td></tr>
+<tr><td>5</td><td>Regresión y PCA teórico, clustering</td><td>El profe: “entran teórico”</td><td>📚 Regresión · PCA · Clustering</td></tr>
+<tr><td>6</td><td>Papers de IA</td><td>Módulo aparte; no salió en este parcial</td><td>📚 IA · 🏠 Palacio</td></tr>
+</table></div>
+
+<h3>Método de 15 minutos antes de entrar</h3>
+<div class="flow"><span>1. Hacé el parcial real en 🎲 Generador (modo parcial)</span><i>→</i><span>2. Corregí con la resolución</span><i>→</i><span>3. ✔ V/F en modo examen</span><i>→</i><span>4. Releé 📐 Fórmulas</span></div>
+</section>
+
+<!-- ============ RESUELTO ============ -->
+<section class="tab" id="res">
+<h2>El parcial real, resuelto como se escribe en el examen</h2>
+<p class="sub">Copiá el formato: fórmula → reemplazo → resultado → interpretación. Todos los números están verificados con código.</p>
+
+<details open><summary>Ejercicio 1 · Métricas (20 pts)</summary><div class="in">
+<p class="mut">Datos: ID 1 → (Y=1; 0,80) · ID 2 → (0; 0,70) · ID 3 → (1; 0,65) · ID 4 → (0; 0,45) · ID 5 → (0; 0,20)</p>
+<h4>1) Matriz de confusión con threshold 0,6</h4>
+<p>Regla: se predice 1 (mora) si <code>Y_PRED ≥ 0,6</code>.</p>
+<div class="tw"><table class="t"><tr><th>ID</th><th>Y_TRUE</th><th>Y_PRED</th><th>Clase predicha</th><th>Resultado</th></tr>
+<tr><td>1</td><td>1</td><td>0,80</td><td>1</td><td>TP</td></tr><tr><td>2</td><td>0</td><td>0,70</td><td>1</td><td>FP</td></tr>
+<tr><td>3</td><td>1</td><td>0,65</td><td>1</td><td>TP</td></tr><tr><td>4</td><td>0</td><td>0,45</td><td>0</td><td>TN</td></tr>
+<tr><td>5</td><td>0</td><td>0,20</td><td>0</td><td>TN</td></tr></table></div>
+<pre class="ans">                  Predicho 1     Predicho 0
+Real 1 (mora)     TP = 2         FN = 0
+Real 0 (no mora)  FP = 1         TN = 2</pre>
+<h4>2) Accuracy, precision, recall</h4>
+<pre class="ans">Accuracy  = (TP+TN)/N   = (2+2)/5 = 0,80
+Precision = TP/(TP+FP)  = 2/(2+1) = 0,667
+Recall    = TP/(TP+FN)  = 2/(2+0) = 1,00
+
+Interpretación: el modelo detecta a todos los morosos (recall 100%) pero
+1 de cada 3 alertas es falsa (precision 66,7%).</pre>
+<h4>3) Costo FN = 10 × costo FP: ¿qué hacer con el threshold?</h4>
+<pre class="ans">Hay que BAJAR el threshold: un FN (moroso no detectado) sale 10 veces más caro
+que un FP, entonces conviene predecir "mora" con menos evidencia, aceptar más
+FP y ganar recall (TPR).
+Regla de decisión con costos: predecir 1 si p ≥ C_FP/(C_FP + C_FN) = 1/(1+10) ≈ 0,09.
+Costo total = C_FN·FN + C_FP·FP. Se elige el umbral que lo minimiza.
+Nota: en esta muestra con 0,6 ya hay FN = 0; bajar más solo sumaría FP.</pre>
+<h4>4) ¿A qué métrica darle más importancia?</h4>
+<pre class="ans">Al RECALL (sensibilidad, TPR = TP/(TP+FN)): mide qué proporción de los morosos
+reales se detecta, y el error caro es el FN. Accuracy no sirve: no distingue
+tipos de error y se engaña con clases desbalanceadas. Precision se vigila como
+restricción para no inundar de falsas alarmas (F1 o F2 como resumen).</pre>
+<h4>5) Curva para TPR vs FPR</h4>
+<pre class="ans">Curva ROC: grafica TPR = TP/(TP+FN) (eje Y) contra FPR = FP/(FP+TN) (eje X)
+para TODOS los thresholds posibles. Muestra el trade-off sensibilidad vs falsas
+alarmas sin fijar un umbral. Se resume con el AUC (1 = perfecto, 0,5 = azar).
+Acá: puntos (FPR,TPR) = (0;0) (0;0,5) (0,33;0,5) (0,33;1) (0,67;1) (1;1) → AUC = 5/6 ≈ 0,83.
+El punto del threshold 0,6 es (FPR; TPR) = (0,33; 1).</pre>
+</div></details>
+
+<details><summary>Ejercicio 2 · Verdadero o Falso (20 pts)</summary><div class="in">
+<pre class="ans">1. FALSO. Overfitting = error BAJO en entrenamiento y ALTO en test: el modelo
+   memoriza el ruido y no generaliza. La afirmación está al revés.
+2. VERDADERO. Feature engineering transforma y crea variables (imputar, binning,
+   log, encoding, agregaciones) para que el modelo capte mejor la señal.
+3. VERDADERO. IA ⊃ ML ⊃ deep learning. Deep learning es el ML basado en redes
+   neuronales multicapa; árboles, regresión o K-Means son ML sin ser redes.
+4. FALSO. Más profundidad = más hojas y más complejidad: el árbol se ajusta al
+   ruido (baja el sesgo, sube la varianza) y AUMENTA el riesgo de overfitting.
+   Se reduce limitando la profundidad o podando.
+5. VERDADERO. PCA genera componentes ortogonales (no correlacionados), cada uno
+   maximiza la varianza que queda sin explicar por los anteriores (Σv = λv).</pre>
+</div></details>
+
+<details><summary>Ejercicio 3 · AdaBoost (30 pts)</summary><div class="in">
+<p class="mut">Asegurado: edad 32 · siniestros previos No · vehículo 12 años · 25.000 km · uso comercial Sí · licencia 8 años. Cumple → +1 (riesgo alto) · No cumple → −1 (riesgo bajo).</p>
+<div class="tw"><table class="t"><tr><th>Stump</th><th>Condición</th><th>Dato</th><th>¿Cumple?</th><th class="n">f(x)</th><th class="n">α</th><th class="n">α·f(x)</th></tr>
+<tr><td>1</td><td>Edad &lt; 25</td><td>32</td><td>No</td><td class="n">−1</td><td class="n">0,973</td><td class="n">−0,973</td></tr>
+<tr><td>2</td><td>Siniestros previos</td><td>No</td><td>No</td><td class="n">−1</td><td class="n">1,280</td><td class="n">−1,280</td></tr>
+<tr><td>3</td><td>Antig. vehículo &gt; 10</td><td>12</td><td>Sí</td><td class="n">+1</td><td class="n">0,920</td><td class="n">+0,920</td></tr>
+<tr><td>4</td><td>Km anuales &gt; 20.000</td><td>25.000</td><td>Sí</td><td class="n">+1</td><td class="n">0,920</td><td class="n">+0,920</td></tr>
+<tr><td>5</td><td>Uso comercial</td><td>Sí</td><td>Sí</td><td class="n">+1</td><td class="n">1,000</td><td class="n">+1,000</td></tr>
+<tr><td>6</td><td>Licencia &lt; 3</td><td>8</td><td>No</td><td class="n">−1</td><td class="n">1,200</td><td class="n">−1,200</td></tr></table></div>
+<pre class="ans">1) Clasificación de cada stump: f1=−1, f2=−1, f3=+1, f4=+1, f5=+1, f6=−1.
+2) Voto ponderado = α_m · f_m(x): −0,973 · −1,280 · +0,920 · +0,920 · +1,000 · −1,200
+3) F(x) = Σ α_m f_m(x) = −0,973 −1,280 +0,920 +0,920 +1,000 −1,200 = −0,613
+4) Predicción = signo(F(x)) = signo(−0,613) = −1  →  RIESGO BAJO de siniestro.
+   Interpretación: los stumps que votan "alto" suman 2,840 y los que votan
+   "bajo" suman 3,453; gana "bajo" por 0,613.</pre>
+</div></details>
+
+<details><summary>Ejercicio 4 · Árbol de decisión (30 pts)</summary><div class="in">
+<p class="mut">Variables: Historial_Reclamos (HR) · Poliza_Vida (PV) · target Riesgo_Alto: 3 Sí y 4 No (7 filas).</p>
+<h4>1) Raíz con Gini</h4>
+<pre class="ans">G(nodo) = 1 − Σ p_k²          TGI = Σ (n_h/n) · G_h       → raíz = menor TGI
+
+Padre: 3 Sí, 4 No → G = 1 − (3/7)² − (4/7)² = 24/49 = 0,490
+
+Corte por Historial_Reclamos:
+  HR = Sí (4 filas: 1 Sí, 3 No): G = 1 − (1/4)² − (3/4)² = 0,375
+  HR = No (3 filas: 2 Sí, 1 No): G = 1 − (2/3)² − (1/3)² = 0,444
+  TGI(HR) = 4/7·0,375 + 3/7·0,444 = 0,405
+
+Corte por Poliza_Vida:
+  PV = Sí (4 filas: 3 Sí, 1 No): G = 1 − (3/4)² − (1/4)² = 0,375
+  PV = No (3 filas: 0 Sí, 3 No): G = 1 − 0 − 1 = 0   (hoja pura)
+  TGI(PV) = 4/7·0,375 + 3/7·0 = 0,214
+
+TGI(PV) = 0,214 < TGI(HR) = 0,405  →  la RAÍZ es Poliza_Vida
+(ganancia = 0,490 − 0,214 = 0,276).</pre>
+<h4>2) Cómo continuar</h4>
+<pre class="ans">- Rama PV = No: 3 filas, todas "No" → G = 0 → HOJA pura: predice Riesgo_Alto = No.
+- Rama PV = Sí: 4 filas (3 Sí, 1 No), G = 0,375, impura → se repite el proceso
+  SOLO con esas filas y las variables restantes (recursive binary splitting,
+  top-down y greedy):
+    HR = Sí → {No, Sí}: G = 0,5     HR = No → {Sí, Sí}: G = 0
+    TGI = 2/4·0,5 + 2/4·0 = 0,25 < 0,375 → el corte mejora, se hace.
+  Hoja HR = No → "Sí" (pura). Hoja HR = Sí → 1 Sí / 1 No (empate, sin más variables).
+- Se corta cuando el nodo es puro, no quedan variables, o se llega a un criterio
+  de parada (profundidad máxima, mínimo de observaciones por hoja, mejora mínima).
+- Cada hoja predice la moda (clasificación).</pre>
+<h4>3) ¿Cuándo usar pruning?</h4>
+<pre class="ans">Cuando el árbol quedó muy grande y hace OVERFITTING: error de entrenamiento casi 0
+pero error de test/CV alto (alta varianza), hojas con muy pocas observaciones
+(como este árbol de 7 filas) o muchas variables ruidosas. Se hace un
+post-pruning: crecer el árbol y podar minimizando RSS(T) + α·|T| (con |T| =
+cantidad de hojas), eligiendo α por validación cruzada. El pre-pruning corta
+antes con hiperparámetros (max_depth, min_samples_leaf, ...). Poda → árbol más
+simple, menos varianza, más fácil de interpretar.</pre>
+</div></details>
+
+<div class="card good"><div class="lbl">Autocorrección</div>
+<p>Ej1: 2/1/2/0 · acc 0,80 · prec 0,667 · rec 1 · AUC 5/6 &nbsp;|&nbsp; Ej2: F, V, V, F, V &nbsp;|&nbsp; Ej3: F(x) = −0,613 → −1 (riesgo bajo) &nbsp;|&nbsp; Ej4: TGI 0,405 vs 0,214 → raíz = Poliza_Vida.</p></div>
+</section>
+<!-- ============ RECETAS ============ -->
+<section class="tab" id="rec">
+<h2>Recetas: “si te piden X, hacé Y”</h2>
+<p class="sub">Cada receta es el paso a paso mínimo, en el orden en que se escribe en la hoja.</p>
+
+<details open><summary>📊 “Calculá la matriz de confusión con threshold t”</summary><div class="in">
+<div class="flow"><span>1. Regla: ŷ = 1 si score ≥ t</span><i>→</i><span>2. Clasificá cada fila</span><i>→</i><span>3. Comparás con Y_TRUE</span><i>→</i><span>4. Contás TP, FP, TN, FN</span></div>
+<ul><li><b>TP</b>: real 1 y predije 1 · <b>FP</b>: real 0 y predije 1 · <b>TN</b>: real 0 y predije 0 · <b>FN</b>: real 1 y predije 0.</li>
+<li>Chequeo: TP+FN = total de positivos reales; FP+TN = total de negativos; todo suma N.</li>
+<li>Mnemotecnia del reloj al revés: la 1ª letra (T/F) dice si <b>acerté</b>; la 2ª (P/N) dice lo que <b>predije</b>.</li>
+<li>Es “≥” (si el score es igual al umbral, se predice 1) salvo que el enunciado diga “mayor que”.</li></ul></div></details>
+
+<details><summary>📏 “Calculá accuracy, precision y recall” (y las demás)</summary><div class="in">
+<pre class="ans">Accuracy  = (TP+TN)/N                 → % de aciertos
+Precision = TP/(TP+FP)                → de lo que marqué 1, cuánto era 1
+Recall    = TPR = TP/(TP+FN)          → de los 1 reales, cuántos agarré
+Especificidad = TN/(TN+FP)            FPR = FP/(FP+TN) = 1 − especificidad
+F1 = 2·P·R/(P+R) = 2TP/(2TP+FP+FN)    (media ARMÓNICA)</pre>
+<ul><li>Precision mira la columna “predicho 1”; recall mira la fila “real 1”.</li>
+<li>Siempre cerrá con una frase: “detecta X% de los casos, pero Y% de las alertas son falsas”.</li></ul></div></details>
+
+<details><summary>💸 “Costo de FN es k veces el de FP: ¿qué hacés con el umbral? ¿Qué métrica?”</summary><div class="in">
+<ul><li><b>FN más caro → BAJAR el umbral</b> (más positivos: sube recall, suben los FP, baja precision). <b>FP más caro → SUBIR</b>.</li>
+<li>Métrica prioritaria: la que controla el error caro. FN caro → <b>recall</b>. FP caro → <b>precision</b>. Accuracy casi nunca (desbalance y costos distintos).</li>
+<li>Umbral óptimo teórico: <code>t* = C_FP/(C_FP + C_FN)</code> (k = 10 → 1/11 ≈ 0,09). En la práctica: probar umbrales y minimizar <code>C_FN·FN + C_FP·FP</code>.</li>
+<li>Justificación en una línea: “el costo esperado de no detectar supera al de una falsa alarma, por eso acepto más FP a cambio de recall”.</li></ul></div></details>
+
+<details><summary>📈 “¿Qué curva usarías?” · ROC, PR y AUC</summary><div class="in">
+<table class="t"><tr><th>Pregunta</th><th>Curva</th><th>Ejes</th></tr>
+<tr><td>Relación entre TPR y FPR / trade-off sensibilidad vs falsas alarmas</td><td><b>ROC</b></td><td>X = FPR · Y = TPR</td></tr>
+<tr><td>Clases muy desbalanceadas / importa la clase positiva</td><td><b>Precision-Recall</b></td><td>X = recall · Y = precision</td></tr></table>
+<ul><li>Cada punto = un umbral. Umbral alto → esquina (0,0); umbral bajo → esquina (1,1).</li>
+<li>Construcción: ordená scores de mayor a menor; en cada umbral calculá TP, FP → (FP/N, TP/P). Empezás en (0,0).</li>
+<li><b>AUC</b>: 1 = perfecto · 0,5 = azar (diagonal) · &lt;0,5 ordena al revés. Interpretación: probabilidad de que un positivo al azar tenga más score que un negativo al azar. No depende del umbral.</li>
+<li>Con desbalance, la ROC luce optimista (los muchos TN achican el FPR): por eso PR. Base de la PR = prevalencia.</li></ul></div></details>
+
+<details><summary>🌲 “Elegí la raíz con Gini” (o entropía)</summary><div class="in">
+<div class="flow"><span>1. G padre</span><i>→</i><span>2. Por cada variable: G de cada rama</span><i>→</i><span>3. TGI = Σ n_h/n · G_h</span><i>→</i><span>4. Raíz = MENOR TGI</span></div>
+<pre class="ans">G = 1 − Σ p_k²     (puro = 0; máximo binario = 0,5)
+TGI = Σ (n_h/n)·G_h
+Con entropía: D = −Σ p_k·log2 p_k (puro 0, máx binario 1); IG = D(padre) − Σ (n_h/n)·D_h → MAYOR IG</pre>
+<ul><li>Variable numérica: ordená los valores y probá los <b>puntos medios</b> entre consecutivos (corte “&lt; s”).</li>
+<li>Ponderás por tamaño de hoja: una hoja de 1 observación no pesa como una de 50.</li>
+<li>Escribí siempre las cuentas de cada rama (cantidad de Sí/No) antes del Gini.</li></ul></div></details>
+
+<details><summary>🌿 “¿Cómo continuás? ¿Cuándo parás? ¿Cuándo podás?”</summary><div class="in">
+<ul><li><b>Continuar:</b> cada rama impura se trata como un problema nuevo con SUS filas: calcular TGI de las variables restantes, elegir el menor, repetir. Es <b>top-down</b> y <b>greedy</b> (mejor corte de ese paso, sin mirar hacia adelante).</li>
+<li><b>Parar:</b> nodo puro · sin variables · profundidad máxima · mínimo de observaciones por hoja o por partir · mejora de impureza mínima.</li>
+<li><b>Hoja:</b> moda (clasificación) / media (regresión).</li>
+<li><b>Pruning:</b> cuando hay overfitting (train ≈ 0, test alto), hojas diminutas, árbol enorme. Post-pruning: <code>RSS(T) + α·|T|</code>, α por cross-validation. Pre-pruning: hiperparámetros.</li></ul></div></details>
+
+<details><summary>🌳 “Árbol de regresión: RSS”</summary><div class="in">
+<pre class="ans">Para cada corte (variable j, punto s): regiones R1 = {X_j &lt; s}, R2 = {X_j ≥ s}
+RSS = Σ_(i∈R1) (y_i − ȳ_R1)² + Σ_(i∈R2) (y_i − ȳ_R2)²   → gana el MENOR RSS
+Predicción en cada hoja = media de y de esa hoja.</pre></div></details>
+
+<details><summary>⚡ “AdaBoost: clasificá con los stumps” (voto ponderado)</summary><div class="in">
+<div class="flow"><span>1. Evaluá cada condición</span><i>→</i><span>2. cumple = +1 / no cumple = −1</span><i>→</i><span>3. α·f</span><i>→</i><span>4. F = Σ α·f</span><i>→</i><span>5. signo(F)</span></div>
+<ul><li>F &gt; 0 → clase +1 · F &lt; 0 → clase −1. Interpretá con la etiqueta del enunciado.</li>
+<li>Cuidado con la polaridad: leé qué significa +1 y −1 (acá +1 = riesgo alto).</li>
+<li>Trampa: dato con signo contrario (“&lt;” vs “&gt;”) o variable categórica con “Sí/No” invertida.</li></ul></div></details>
+
+<details><summary>⚖️ “AdaBoost: calculá α y reponderá los pesos”</summary><div class="in">
+<pre class="ans">1) w_i = 1/N
+2) ε = suma de pesos de los MAL clasificados
+3) α = ½·ln((1−ε)/ε)
+4) mal clasificado: w·e^(+α)     bien clasificado: w·e^(−α)
+5) normalizar: dividir cada peso por la suma de todos
+Chequeo: tras normalizar, los mal clasificados suman exactamente 0,5.</pre>
+<ul><li>ε = 0,5 → α = 0 (no vota) · ε &lt; 0,5 → α &gt; 0 · ε &gt; 0,5 → α &lt; 0 (voto invertido).</li>
+<li>Por qué sube el peso de los errores: para que el próximo stump se concentre en lo que el anterior erró.</li></ul></div></details>
+
+<details><summary>🌲🌲 “Random Forest”: qué te preguntan siempre</summary><div class="in">
+<ul><li><b>Construcción:</b> B muestras bootstrap (con reemplazo, tamaño n) → B árboles profundos sin podar → en cada <b>nodo</b> se eligen m ≈ √p variables al azar → voto mayoritario (promedio en regresión).</li>
+<li><b>Por qué funciona:</b> el promedio de árboles decorrelacionados baja la <b>varianza</b> sin subir el sesgo.</li>
+<li><b>OOB:</b> P(una observación NO entra al bootstrap) = (1−1/n)ⁿ → 1/e ≈ 0,368 (≈ 1/3). El error OOB se calcula con esas observaciones, sin necesidad de test aparte.</li>
+<li><b>RF vs AdaBoost:</b> RF → árboles grandes, independientes, en paralelo, voto igual. AdaBoost → stumps, secuenciales, cada uno corrige al anterior, voto con α.</li></ul></div></details>
+
+<details><summary>🔻 “PCA: describí / calculá”</summary><div class="in">
+<div class="flow"><span>1. Sacá target e ID</span><i>→</i><span>2. Estandarizá (z)</span><i>→</i><span>3. Matriz de correlación Σ</span><i>→</i><span>4. Autovalores/autovectores</span><i>→</i><span>5. PVE = λ/Σλ</span><i>→</i><span>6. Elegí componentes</span></div>
+<ul><li>Autovector = dirección (loadings); autovalor = varianza de esa componente. Σv = λv, vᵀv = 1.</li>
+<li>2×2: λ² − traza·λ + det = 0. Con correlación r: λ = 1 ± r.</li>
+<li>Cuántas: 80–85% acumulado o codo del scree plot. Máximo p componentes, ortogonales.</li>
+<li>Límites: solo estructura <b>lineal</b> y variables <b>cuantitativas</b>; las componentes son menos interpretables.</li></ul></div></details>
+
+<details><summary>🎯 “K-Means: hacé una iteración”</summary><div class="in">
+<div class="flow"><span>1. Distancia de cada punto a cada centroide</span><i>→</i><span>2. Asignar al más cercano</span><i>→</i><span>3. Centroide = promedio del grupo</span><i>→</i><span>4. Repetir hasta que no cambie</span></div>
+<ul><li>Distancia euclidiana d = √Σ(x_j − μ_j)². Podés comparar distancias al cuadrado (da lo mismo).</li>
+<li>WCSS = Σ distancias² al centroide. Elegís K con el codo o la silueta <code>s = (b−a)/máx(a,b)</code>.</li>
+<li>Estandarizá antes. Sensible a outliers y a la inicialización (varias corridas).</li></ul></div></details>
+
+<details><summary>📐 “Regresión lineal: a mano e interpretación”</summary><div class="in">
+<pre class="ans">β1 = Σ(x−x̄)(y−ȳ) / Σ(x−x̄)²     β0 = ȳ − β1·x̄
+RSS = Σ(y−ŷ)²   TSS = Σ(y−ȳ)²   R² = 1 − RSS/TSS   RSE = √(RSS/(n−2))
+SE(β1) = RSE/√Σ(x−x̄)²           t = β1/SE(β1) ~ t(n−2)     IC95% ≈ β1 ± 2·SE</pre>
+<ul><li>β1: cambio esperado en Y por +1 en X (múltiple: con las otras variables fijas). R²: % de varianza explicada.</li>
+<li>Test t con p-valor chico → hay evidencia de relación. R² alto no implica causalidad.</li>
+<li>Fallas y remedios: no linealidad (transformar X, polinomios) · heterocedasticidad (log Y) · outliers/leverage · multicolinealidad (VIF &gt; 5–10 → sacar variable o PCA).</li></ul></div></details>
+
+<details><summary>✔ Cómo atacar un Verdadero/Falso con justificación</summary><div class="in">
+<ol><li>Buscá la <b>palabra trampa</b>: “siempre”, “nunca”, “todo”, “solo”, “disminuye/aumenta”, “muy alto”. Casi siempre invierten un concepto.</li>
+<li>Decí V o F <b>primero</b>, después una justificación de una o dos líneas con el concepto clave.</li>
+<li>Si es F, <b>corregí</b> la afirmación (“lo correcto es …”). Eso suma.</li></ol>
+<p class="mut">Pares que invierten: overfitting (train bajo / test alto) · profundidad (↑ overfitting) · TGI (menor gana) · α (mal clasificado sube, bien baja) · umbral (FN caro → bajar) · ROC (TPR vs FPR) · F1 (armónica) · AUC 0,5 (azar).</p></div></details>
+
+<details><summary>✍️ “Describí brevemente…” / “Comentá en qué casos…”</summary><div class="in">
+<p>Estructura de 4 líneas: <b>qué es → cómo se hace (pasos) → por qué/para qué → cuándo (o un ejemplo del enunciado)</b>. Usá los términos de clase: recursive binary splitting, greedy, top-down, TGI, hoja pura, moda, α por CV.</p></div></details>
+</section>
+<!-- ============ CALCULADORAS ============ -->
+<section class="tab" id="calc">
+<h2>Calculadoras con el paso a paso</h2>
+<p class="sub">Cambiá los datos y mirá cómo se resuelve. Vienen cargadas con los datos del parcial real. Usan la notación de clase.</p>
+<div id="calcnav">
+<span class="pill on" data-c="mt">Métricas + ROC</span><span class="pill" data-c="gi">Árbol (Gini)</span><span class="pill" data-c="av">AdaBoost: voto</span><span class="pill" data-c="ap">AdaBoost: pesos</span><span class="pill" data-c="rg">Regresión</span><span class="pill" data-c="pc">PCA</span><span class="pill" data-c="km">K-Means</span>
+</div>
+
+<!-- Métricas -->
+<div class="sec on" id="c-mt">
+<div class="card"><div class="lbl">Datos: una fila por observación → <code>y_real, score</code></div>
+<textarea id="mt-data" spellcheck="false">1, 0.80
+0, 0.70
+1, 0.65
+0, 0.45
+0, 0.20</textarea>
+<div class="row"><label>Umbral t <input type="number" id="mt-thr" step="0.01" value="0.6"></label>
+<input type="range" id="mt-sl" min="0" max="1" step="0.01" value="0.6">
+<label>Costo FP <input type="number" id="mt-cfp" value="1" min="0" step="1"></label>
+<label>Costo FN <input type="number" id="mt-cfn" value="10" min="0" step="1"></label></div></div>
+<div id="mt-out"></div></div>
+
+<!-- Gini -->
+<div class="sec" id="c-gi">
+<div class="card"><div class="lbl">Tabla (con encabezado). Separá columnas con coma, tab o punto y coma</div>
+<textarea id="gi-data" spellcheck="false">Historial_Reclamos,Poliza_Vida,Riesgo_Alto
+Si,Si,No
+Si,No,No
+No,Si,Si
+No,Si,Si
+Si,Si,Si
+Si,No,No
+No,No,No</textarea>
+<div class="row"><label>Criterio <select id="gi-crit"><option value="g">Gini (TGI)</option><option value="e">Entropía (IG)</option></select></label>
+<label>Target <select id="gi-target"></select></label>
+<button class="btn" id="gi-go">Calcular</button></div>
+<p class="mut" style="margin:0">Las variables numéricas se evalúan con puntos medios (“&lt; s”). Muestra también el árbol completo (greedy).</p></div>
+<div id="gi-out"></div></div>
+
+<!-- AdaBoost voto -->
+<div class="sec" id="c-av">
+<div class="card"><div class="lbl">Stumps: condición, peso α y si el asegurado cumple</div>
+<div class="tw"><table class="t" id="av-tbl"><thead><tr><th>#</th><th>Condición (opcional)</th><th>α</th><th>¿Cumple?</th><th></th></tr></thead><tbody id="av-body"></tbody></table></div>
+<div class="row"><button class="btn g" id="av-add">+ stump</button>
+<label>Cumple = <input id="av-pos" value="riesgo alto" size="14"> (+1)</label>
+<label>No cumple = <input id="av-neg" value="riesgo bajo" size="14"> (−1)</label></div></div>
+<div id="av-out"></div></div>
+
+<!-- AdaBoost pesos -->
+<div class="sec" id="c-ap">
+<div class="card"><div class="lbl">Reponderación de un stump</div>
+<div class="row"><label>N observaciones <input type="number" id="ap-n" value="8" min="2"></label>
+<label>Errores del stump <input type="number" id="ap-k" value="1" min="0"></label></div>
+<p class="mut">O pegá pesos propios, una línea por observación: <code>peso, M</code> (mal clasificada) o <code>peso, B</code> (bien). Si lo completás, se usa esto.</p>
+<textarea id="ap-custom" spellcheck="false" style="min-height:70px" placeholder="0.125, B&#10;0.125, M"></textarea>
+<div class="row"><label>Calcular α desde ε: <input type="number" id="ap-eps" step="0.01" value="0.125"></label><span id="ap-a"></span></div></div>
+<div id="ap-out"></div></div>
+
+<!-- Regresión -->
+<div class="sec" id="c-rg">
+<div class="card"><div class="lbl">Datos: <code>x, y</code> por línea</div>
+<textarea id="rg-data" spellcheck="false">1, 2.1
+2, 3.9
+3, 6.2
+4, 7.8
+5, 10.1</textarea>
+<div class="row"><label>Predecir en x₀ = <input type="number" id="rg-x0" value="6" step="any"></label></div></div>
+<div id="rg-out"></div></div>
+
+<!-- PCA -->
+<div class="sec" id="c-pc">
+<div class="card"><div class="lbl">Dos variables</div>
+<div class="row"><label>Modo <select id="pc-mode"><option value="m">Matriz 2×2 (cov o corr)</option><option value="d">Datos x1, x2</option></select></label></div>
+<div id="pc-m" class="row"><label>σ₁² <input type="number" id="pc-a" step="any" value="2"></label><label>cov <input type="number" id="pc-b" step="any" value="1"></label><label>σ₂² <input type="number" id="pc-d" step="any" value="2"></label></div>
+<div id="pc-dd" style="display:none"><textarea id="pc-data" spellcheck="false" style="min-height:90px">2, 4
+4, 7
+6, 12
+8, 13
+10, 19</textarea></div>
+<button class="btn" id="pc-go">Calcular</button></div>
+<div id="pc-out"></div></div>
+
+<!-- K-Means -->
+<div class="sec" id="c-km">
+<div class="card"><div class="lbl">Puntos (una línea: <code>x, y</code>; 1D también sirve) y centroides iniciales</div>
+<div class="grid2"><div><label>Puntos</label><textarea id="km-pts" spellcheck="false" style="min-height:110px">1, 1
+1.5, 2
+3, 4
+5, 7
+3.5, 5
+4.5, 5
+3.5, 4.5</textarea></div><div><label>Centroides</label><textarea id="km-cent" spellcheck="false" style="min-height:110px">1, 1
+5, 7</textarea></div></div>
+<div class="row"><button class="btn" id="km-go">Iterar</button><button class="btn g" id="km-next">Usar nuevos centroides y repetir</button></div></div>
+<div id="km-out"></div></div>
+</section>
+
+<!-- ============ GENERADOR ============ -->
+<section class="tab" id="gen">
+<h2>Generador de exámenes</h2>
+<p class="sub">Ejercicios nuevos con el mismo formato del parcial. Resolvelos en papel y después mirá la resolución. Cada uno tiene su semilla, así que podés repetirlo.</p>
+<div class="card"><div class="row" id="gen-types">
+<button class="btn" data-g="exam">🎯 Parcial completo nuevo (100 pts)</button>
+<button class="btn g" data-g="e1">Ej1 Métricas</button>
+<button class="btn g" data-g="e2">Ej2 V/F</button>
+<button class="btn g" data-g="e3">Ej3 AdaBoost</button>
+<button class="btn g" data-g="e4">Ej4 Árbol</button></div>
+<div class="row"><span class="mut" id="gen-seed"></span><button class="btn g" id="gen-new">Otro (nueva semilla)</button><label>Semilla <input type="number" id="gen-seedin" style="width:90px"></label><button class="btn g" id="gen-set">Usar</button></div></div>
+<div id="gen-out"></div>
+</section>
+<!-- ============ TEORÍA ============ -->
+<section class="tab" id="teo">
+<h2>Teoría unificada</h2>
+<p class="sub">Todos los temas, en el orden en que se conectan. Buscá una palabra o abrí el tema.</p>
+<div class="row"><input id="teo-q" placeholder="🔎 buscar (ej: OOB, α, VIF, silueta)" style="width:100%"></div>
+
+<details class="theo" open><summary>0 · Marco de ML: supervisado, overfitting, sesgo-varianza</summary><div class="in">
+<ul>
+<li><b>IA ⊃ Machine Learning ⊃ Deep Learning ⊃ IA generativa.</b> No son sinónimos. DL = redes neuronales multicapa; árboles, regresión, K-Means son ML sin ser DL.</li>
+<li><b>Supervisado:</b> hay variable respuesta Y etiquetada (clasificación o regresión). <b>No supervisado:</b> no hay Y; busca estructura (clustering, PCA).</li>
+<li><b>Y = f(X) + ε.</b> Error esperado = reducible (f − f̂)² + irreducible Var(ε). Un modelo no puede bajar de Var(ε).</li>
+<li><b>Train / validation / test:</b> train ajusta parámetros · validation elige hiperparámetros o modelo · test se usa <b>una vez</b> al final para estimar el error real. Validación cruzada (k-fold) cuando hay pocos datos.</li>
+<li><b>Overfitting:</b> error de entrenamiento BAJO y de test ALTO (varianza alta, memoriza ruido). <b>Underfitting:</b> ambos altos (sesgo alto). Al subir la flexibilidad el sesgo baja y la varianza sube: el error de test tiene forma de U.</li>
+<li><b>Cómo se combate el overfitting:</b> más datos, modelo más simple, poda, regularización, CV, ensambles, menos variables.</li>
+<li><b>Data leakage:</b> información del test o del futuro entra al entrenamiento (imputar o escalar con todo el dataset; una variable que “contiene” al target). Da métricas falsamente buenas.</li></ul></div></details>
+
+<details class="theo"><summary>1 · Métricas de clasificación y regresión</summary><div class="in">
+<table class="t"><tr><th></th><th>Predicho 1</th><th>Predicho 0</th></tr><tr><th>Real 1</th><td>TP</td><td>FN</td></tr><tr><th>Real 0</th><td>FP</td><td>TN</td></tr></table>
+<ul>
+<li><b>Accuracy</b> (TP+TN)/N · <b>Precision</b> TP/(TP+FP) · <b>Recall/TPR/sensibilidad</b> TP/(TP+FN) · <b>Especificidad</b> TN/(TN+FP) · <b>FPR</b> FP/(FP+TN) · <b>F1</b> = 2PR/(P+R), media armónica (castiga que una de las dos sea baja).</li>
+<li><b>Umbral:</b> subirlo → menos FP (sube precision) y más FN (baja recall). Bajarlo → lo contrario. Siempre hay trade-off.</li>
+<li><b>Costos asimétricos:</b> FN caro → bajar umbral y priorizar recall (enfermedad, mora, fraude). FP caro → subir umbral y priorizar precision (spam importante, acusar a un inocente). Umbral óptimo t* = C_FP/(C_FP+C_FN).</li>
+<li><b>Desbalance:</b> con 3% de positivos, predecir siempre “0” da 97% de accuracy y recall 0. Usar recall, precision, F1, PR-AUC.</li>
+<li><b>ROC:</b> TPR vs FPR para todos los umbrales; <b>AUC</b> = 1 perfecto, 0,5 azar, &lt;0,5 al revés; = P(score positivo &gt; score negativo). <b>PR:</b> precision vs recall; mejor con desbalance (base = prevalencia). <b>Average Precision</b> = área bajo la PR.</li>
+<li><b>Comparar modelos:</b> A (acc 0,91; recall 0,70) vs B (acc 0,85; recall 0,83): si el FN es caro (diagnóstico), B aunque tenga menos accuracy.</li>
+<li><b>Train/val/test:</b> si el modelo rinde 0,99 en train y 0,80 en validación → overfitting. El test no se toca hasta el final.</li>
+<li><b>Regresión:</b> MAE = ⅟ₙΣ|y−ŷ| (robusta) · MSE = ⅟ₙΣ(y−ŷ)² (castiga errores grandes) · RMSE = √MSE (unidades de y) · R² = 1 − RSS/TSS.</li></ul></div></details>
+
+<details class="theo"><summary>2 · Árboles de decisión</summary><div class="in">
+<ul>
+<li><b>Vocabulario:</b> raíz (primer nodo, contiene todo) · nodo interno (corte X_j &lt; s) · rama (True/False) · hoja (región final; predice moda o media) · profundidad (cortes entre raíz y hoja).</li>
+<li><b>Idea:</b> dividir el espacio de predictores en J regiones rectangulares R₁…R_J, distintas y no superpuestas. Toda observación que cae en R_j recibe la misma predicción: moda (clasificación) o media (regresión).</li>
+<li><b>Recursive binary splitting:</b> top-down (arranca con todas las observaciones) y greedy (el mejor corte de cada paso, sin mirar adelante). Para cada variable j y punto s se prueba R₁ = {X_j &lt; s}, R₂ = {X_j ≥ s}. Para variables numéricas: puntos medios entre valores consecutivos.</li>
+<li><b>Impureza (clasificación):</b> Gini G = 1 − Σp_k² (puro 0, máx binario 0,5) · Entropía D = −Σp_k·log₂p_k (puro 0, máx binario 1) · Error 1 − máx p_k. <b>TGI = Σ(n_h/n)·G_h</b>: gana el corte con MENOR TGI. Con entropía: IG = D(padre) − Σ(n_h/n)·D_h, gana el MAYOR.</li>
+<li><b>Regresión:</b> se elige el corte que minimiza RSS = Σ_j Σ_(i∈R_j)(y_i − ȳ_Rj)².</li>
+<li><b>Ejemplo de clase (Cool as Ice):</b> TGI(PopCorn) = 0,405 · TGI(Soda) = 0,214 · TGI(Age &lt; 15) = 0,343 → raíz = Soda. Regresión (Age → gasto en cine): RSS 65,71 → 39,30 → 3,00 al agregar cortes.</li>
+<li><b>Overfitting:</b> el árbol completo tiene sesgo bajo y varianza alta; el error de entrenamiento siempre baja al agregar hojas, el de CV/test hace una U.</li>
+<li><b>Pre-pruning</b> (parar antes): max_depth, min_samples_split, min_samples_leaf, max_leaf_nodes, min_impurity_decrease. Es miope: puede frenar justo antes de un corte muy bueno.</li>
+<li><b>Post-pruning:</b> crecer un árbol grande y podarlo minimizando RSS(T) + α·|T| (|T| = hojas). α = 0 → árbol completo; α ↑ → árbol más chico. α se elige por cross-validation (en sklearn: ccp_alpha).</li>
+<li><b>Datos faltantes:</b> eliminar, imputar, categoría “faltante”, surrogate splits (CART); sklearn ≥ 1.3 acepta NaN.</li>
+<li><b>Ventajas:</b> fáciles de explicar y graficar, imitan decisiones humanas, manejan variables cualitativas sin dummies. <b>Desventajas:</b> menor precisión, poco robustos (alta varianza), fronteras rectangulares. La salida son los ensambles.</li>
+<li><b>Lineal vs árbol:</b> relación aproximadamente lineal → gana la regresión; relación no lineal compleja → puede ganar el árbol. Se decide comparando error de test (CV).</li></ul></div></details>
+
+<details class="theo"><summary>3 · Random Forest (bagging + decorrelación)</summary><div class="in">
+<ul>
+<li><b>Bagging:</b> promediar árboles entrenados sobre muestras <b>bootstrap</b> (con reemplazo, tamaño n). Baja la varianza.</li>
+<li><b>Random Forest:</b> bagging + en cada <b>nodo</b> solo se consideran m &lt; p variables al azar (m ≈ √p en clasificación, p/3 en regresión). Así los árboles se decorrelacionan: si hay un predictor muy fuerte, no todos los árboles empiezan igual.</li>
+<li><b>Árboles:</b> profundos, sin podar (bajo sesgo, alta varianza); el promedio baja la varianza. Se construyen en <b>paralelo</b>, independientes. Voto mayoritario (promedio en regresión). Todos pesan igual.</li>
+<li><b>Out-of-bag (OOB):</b> P(una observación no sale en un bootstrap) = (1−1/n)ⁿ → 1/e ≈ 0,368 (≈ 1/3). Cada observación se predice con los árboles que no la vieron; error OOB = % mal clasificadas. Aproxima el error de test sin separar datos.</li>
+<li><b>Importancia de variables:</b> cuánto baja la impureza (o aumenta el error al permutarla) en promedio.</li>
+<li>Más árboles no producen overfitting; baja y estabiliza el error.</li></ul></div></details>
+
+<details class="theo"><summary>4 · AdaBoost (boosting)</summary><div class="in">
+<ul>
+<li><b>Stumps:</b> árboles de un solo corte (clasificadores débiles). Se entrenan en <b>secuencia</b>: cada uno se concentra en los errores del anterior. Cada stump tiene su propio peso α.</li>
+<li><b>Algoritmo:</b> (1) w_i = 1/N · (2) para cada stump: ajustarlo con los pesos (menor Gini ponderado) · ε = suma de pesos de mal clasificados · <b>α = ½ ln((1−ε)/ε)</b> · mal clasificado: w·e^α (sube) · bien clasificado: w·e^(−α) (baja) · normalizar · (3) <b>F(x) = Σ α_b f_b(x)</b>, predicción = signo(F).</li>
+<li><b>Lectura de α:</b> ε chico → α grande (mucha voz). ε = 0,5 → α = 0 (no mejora al azar, no vota). ε &gt; 0,5 → α &lt; 0 (su voto se invierte). ε = 0 → α infinito (se acota).</li>
+<li>Tras normalizar, los mal clasificados suman exactamente <b>1/2</b>.</li>
+<li><b>Ejemplo de clase:</b> 8 pacientes, 1 error: ε = 1/8 → α = ½ ln 7 = 0,973; peso del error 0,125·e^0,973 = 0,331 → normalizado 0,5; cada acierto 0,125·e^−0,973 = 0,047 → 0,0714.</li>
+<li><b>RF vs AdaBoost:</b></li></ul>
+<table class="t"><tr><th></th><th>Random Forest</th><th>AdaBoost</th></tr>
+<tr><td>Árboles</td><td>Grandes, sin podar</td><td>Stumps (1 corte)</td></tr>
+<tr><td>Orden</td><td>Independientes, paralelo</td><td>Secuencial, el orden importa</td></tr>
+<tr><td>Datos</td><td>Bootstrap + m variables por nodo</td><td>Todos los datos con pesos que cambian</td></tr>
+<tr><td>Voto</td><td>Igual para todos</td><td>Ponderado por α</td></tr>
+<tr><td>Reduce sobre todo</td><td>Varianza</td><td>Sesgo</td></tr>
+<tr><td>Ruido/outliers</td><td>Más robusto</td><td>Más sensible (sube el peso de los difíciles)</td></tr></table></div></details>
+
+<details class="theo"><summary>5 · Regresión lineal</summary><div class="in">
+<ul>
+<li><b>Aprendizaje estadístico:</b> Y = f(X) + ε. Se estima f para <b>predecir</b> (importa la precisión) o <b>inferir</b> (importa entender cómo X afecta a Y). Paramétrico (supone una forma, ej. lineal) vs no paramétrico (flexible, necesita más datos).</li>
+<li><b>Simple:</b> Y = β₀ + β₁X + ε. MCO minimiza RSS = Σ(y−ŷ)². β₁ = Σ(x−x̄)(y−ȳ)/Σ(x−x̄)², β₀ = ȳ − β₁x̄.</li>
+<li><b>Precisión:</b> SE(β₁) = σ/√Σ(x−x̄)²; IC95% ≈ β₁ ± 2·SE; <b>test t</b> = β₁/SE ~ t(n−2) para H₀: β₁ = 0 (p-valor chico → hay relación).</li>
+<li><b>Ajuste:</b> RSE = √(RSS/(n−p−1)) (error típico en unidades de Y) · <b>R²</b> = 1 − RSS/TSS (proporción de varianza explicada; nunca baja al agregar variables) · R² ajustado penaliza variables inútiles.</li>
+<li><b>Múltiple:</b> β̂ = (XᵀX)⁻¹Xᵀy. β_j = efecto de +1 en X_j con las demás fijas. <b>Paradoja newspaper:</b> en la simple parece significativo (correlaciona con radio); en la múltiple deja de serlo.</li>
+<li><b>Cuatro preguntas:</b> ¿hay relación? → test F = ((TSS−RSS)/p)/(RSS/(n−p−1)) · ¿qué variables? → selección forward/backward/mixta, AIC/BIC/R² aj. · ¿cuán bien ajusta? → RSE, R² · ¿predicción? → el intervalo de predicción es más ancho que el de confianza (suma Var(ε)).</li>
+<li><b>Cualitativas:</b> dummies (k−1 para k categorías). <b>Interacciones:</b> X₁·X₂ (sinergia). <b>No linealidad:</b> términos polinómicos o transformaciones.</li>
+<li><b>Potenciales fallas:</b></li></ul>
+<table class="t"><tr><th>Problema</th><th>Síntoma</th><th>Remedio</th></tr>
+<tr><td>No linealidad</td><td>Residuos vs ajustados con patrón</td><td>Transformar X, polinomios</td></tr>
+<tr><td>Errores correlacionados</td><td>Series de tiempo; residuos pegados</td><td>Modelos de series; errores estándar robustos</td></tr>
+<tr><td>Heterocedasticidad</td><td>Embudo en residuos</td><td>log(Y), mínimos cuadrados ponderados</td></tr>
+<tr><td>Outliers / leverage</td><td>Residuos estudentizados &gt; 3; h_i alto</td><td>Revisar el dato; no borrar sin criterio</td></tr>
+<tr><td>Colinealidad</td><td>SE inflados; VIF &gt; 5–10</td><td>Sacar una variable; combinar; PCA</td></tr></table></div></details>
+
+<details class="theo"><summary>6 · PCA</summary><div class="in">
+<ul>
+<li><b>Para qué:</b> muchas variables cuantitativas correlacionadas → reducir dimensión, visualizar, eliminar multicolinealidad, descubrir factores latentes.</li>
+<li><b>Antes:</b> excluir la variable objetivo y los ID; <b>estandarizar</b> z = (x−μ)/σ (PCA sobre la matriz de correlación).</li>
+<li><b>Idea:</b> la 1ª componente es la dirección v (con vᵀv = 1) que maximiza la varianza vᵀΣv. Con el Lagrangiano: <b>Σv = λv</b>. Autovector = dirección (loadings); autovalor λ = varianza de la componente. Las componentes son <b>ortogonales</b> (no correlacionadas); cada una maximiza la varianza restante.</li>
+<li><b>Varianza explicada:</b> PVE_m = λ_m/Σλ. Con datos estandarizados, Σλ = p. Se retienen componentes hasta ~80–85% acumulado o hasta el codo del scree plot. Máximo p componentes.</li>
+<li><b>Scores</b> = datos proyectados Z·V. <b>Loadings</b> = qué variables pesan en cada componente.</li>
+<li><b>Ejemplo de clase:</b> 17 variables de tarjetas de crédito; PC1 32,5%, PC2 17%, PC3 14,9%; 6 componentes = 84,5%.</li>
+<li><b>2×2:</b> S = [[4,2],[2,3]] → λ² − 7λ + 8 = 0 → λ = 5,56 y 1,44 (suman la traza 7) → PVE₁ = 79,5%.</li>
+<li><b>Límites:</b> solo capta estructura <b>lineal</b>; solo variables cuantitativas; las componentes son menos interpretables; sensible a la escala (por eso se estandariza).</li></ul></div></details>
+
+<details class="theo"><summary>7 · Clustering</summary><div class="in">
+<ul>
+<li><b>No supervisado y exploratorio:</b> no hay etiqueta. Hay que decidir: distancia, cuántos grupos, si hay jerarquía, qué distribución, cómo evaluar.</li>
+<li><b>K-Means:</b> (1) fijar K (2) centroides iniciales (3) asignar cada punto al centroide más cercano (distancia euclidiana) (4) recalcular centroides como promedios (5) repetir hasta que no cambien. Minimiza WCSS = Σ_kΣ‖x−μ_k‖². TSS = WCSS + BCSS. Grupos esféricos, sensible a escala y outliers, depende de la inicialización.</li>
+<li><b>Elegir K:</b> <b>codo</b> (WCSS vs K) · <b>silueta</b> s = (b−a)/máx(a,b) en [−1,1] (a = distancia media a su grupo, b = al grupo vecino más cercano) · <b>ARI</b> si hay partición de referencia (1 perfecto, 0 azar).</li>
+<li><b>Jerárquico:</b> aglomerativo (de abajo hacia arriba) o divisivo. Enlaces: Ward (menor aumento de WCSS), Complete (distancia máxima), Average. Se corta el <b>dendrograma</b> a una altura para obtener los grupos; no requiere K de antemano. Costo O(n²) memoria, O(n³) tiempo.</li>
+<li><b>DBSCAN:</b> parámetros ε (radio) y MinPts. Punto <b>núcleo</b> (≥ MinPts vecinos en ε), <b>frontera</b> (cerca de un núcleo) y <b>ruido</b> (aislado). Formas arbitrarias, detecta anomalías (fraude), no requiere K; hay que calibrar ε.</li>
+<li><b>GMM:</b> P(x) = Σπ_k·N(x|μ_k,Σ_k), ajustada con EM (paso E: responsabilidades; paso M: reestimar). <b>Soft clustering</b>: P(C_k|x_i); grupos elípticos.</li></ul>
+<table class="t"><tr><th>Método</th><th>¿K?</th><th>Forma</th><th>Outliers</th><th>Pertenencia</th></tr>
+<tr><td>K-Means</td><td>Sí</td><td>Esférica</td><td>Los desplazan</td><td>Dura</td></tr>
+<tr><td>Jerárquico</td><td>No (se corta)</td><td>Según enlace</td><td>Sensible</td><td>Dura</td></tr>
+<tr><td>DBSCAN</td><td>No</td><td>Arbitraria</td><td>Los marca como ruido</td><td>Dura + ruido</td></tr>
+<tr><td>GMM</td><td>Sí</td><td>Elíptica</td><td>Baja probabilidad</td><td>Suave</td></tr></table></div></details>
+
+<details class="theo"><summary>8 · Feature Engineering</summary><div class="in">
+<ul>
+<li><b>Qué es:</b> transformar y crear variables para mejorar la capacidad predictiva. Suele rendir más que cambiar de modelo.</li>
+<li><b>Faltantes:</b> eliminar (pierde información, puede sesgar) · imputar (media/mediana/moda, por grupo, por modelo) · agregar indicador “faltante” (a veces es informativo). Imputar con estadísticos de <b>train</b> (evita leakage).</li>
+<li><b>Binning:</b> agrupar numéricas en tramos (edad, antigüedad). <b>Cola larga</b> (monto de siniestros): log o raíz para bajar la asimetría.</li>
+<li><b>Escalado:</b> estandarizar o min-max; necesario para K-Means, PCA, KNN, regularización; los árboles no lo necesitan.</li>
+<li><b>Codificación:</b> one-hot (pocas categorías) · ordinal (si hay orden) · frequency/target encoding (alta cardinalidad; cuidar leakage).</li>
+<li><b>Agregaciones</b> de historiales (suma, media, máx, conteo, recencia, tendencia) · fechas (antigüedad, mes) · ratios e interacciones.</li>
+<li><b>Outliers:</b> detectar (IQR, z-score), revisar, winsorizar o transformar.</li>
+<li><b>Plan de ML:</b> definir problema y métrica → split train/val/test → limpieza y FE sin leakage → baseline → modelos y CV → evaluar en test → interpretar.</li></ul></div></details>
+
+<details class="theo"><summary>9 · IA y profesión actuarial (6 papers + clase)</summary><div class="in">
+<p><b>Clase:</b> IA ⊃ ML ⊃ DL ⊃ IA generativa (VAE 2013, difusión 2014, transformadores). IA estrecha (la actual) vs general (teórica). Flujo: datos → algoritmo → cómputo → modelo → resultado. No se codifican reglas: se entrena con ejemplos.</p>
+<p class="k">La tesis común: la IA gana eficiencia procesando patrones del pasado pero no reemplaza el juicio actuarial. Human in the loop; datos históricos no son verdad objetiva; caja negra/explicabilidad; ASOPs = piso, no techo.</p>
+<table class="t"><tr><th>Paper</th><th>Lo esencial</th></tr>
+<tr><td><b>1 · Turing (1950)</b></td><td>Juego de la imitación: A (hombre), B (mujer), C (interrogador) solo por texto; ¿qué pasa si una máquina ocupa el lugar de A? Computador digital = almacenamiento + unidad ejecutiva + control. <b>Universalidad</b>: una máquina programable imita a cualquier máquina de estados discretos. Predicción: ~70% de aciertos de C hacia el 2000 con 10⁹ de almacenamiento. 9 objeciones (teológica, cabezas en la arena, matemática/Gödel, conciencia, discapacidades, <b>Lady Lovelace</b>, continuidad nerviosa, informalidad de la conducta, ESP). Niño-máquina + educación.</td></tr>
+<tr><td><b>2 · Gutterman</b></td><td>Peligro de confiar en datos históricos. IA y actuario reconocen patrones; el actuario suma <b>juicio</b>. IA: caja negra, sesgo heredado, no cuestiona. Trabajo <b>prospectivo</b>. Gut check + peer review. Bletchley Agreement: IA human-centric, trustworthy, responsible.</td></tr>
+<tr><td><b>3 · Sesgo y equidad</b></td><td><b>“The data is not the data”.</b> Proxies sesgados (ZIP ↔ raza/ingreso/redlining). Caso <b>eGFR</b> (factor racial: 53 vs 36 sin él). Algoritmo de cuidados 2019 (gasto pasado como proxy). IA dermatológica: sesgo por omisión. Radiología +15%. ASOPs piso, no techo; actuario como científico social.</td></tr>
+<tr><td><b>4 · GenAI Roundtable</b></td><td>13 expertos, marzo 2025. Usos: coding (más de la mitad), asistente digital, resumen/categorización, <b>RAG</b>, validación de modelos. Vendor/in-house/híbrido (4/4/5). Privacidad (datos sintéticos). El actuario es el puente (tiene código de conducta); la IA no replica la <b>intención</b>.</td></tr>
+<tr><td><b>5 · Longevidad</b></td><td>La IA acelera la longevidad con saltos desiguales. <b>Lee-Carter</b> (edad + tendencia temporal + error) y <b>CBD</b> (edad-cohorte) asumen tendencias estables → no capturan <b>step-changes</b>. Solución: ML + modelos <b>híbridos</b> + <b>XAI</b> + datos nuevos (EHR, wearables, genómica). +18,7% de precisión. Sube la edad de retiro.</td></tr>
+<tr><td><b>6 · AI Bulletin (may. 2026)</b></td><td><b>Paradoja METR</b> (esperaban +24%, fueron −19%): verification debt, defensibility debt, error silencioso. <b>FS AI RMF</b>: Govern/Map/Measure/Manage (230 controles). 4 etapas de adopción (Initial, Minimal, Evolving, Embedded). RAG (AXA/Generali/Zurich). IA como segunda opinión en reservas. Fairness: demographic vs predictive parity, pre/in/post-processing (0,199 → 0,017). Silent AI vs Affirmative AI. High throughput operator.</td></tr></table></div></details>
+</section>
+<!-- ============ V/F ============ -->
+<section class="tab" id="vf">
+<h2>Entrenador de Verdadero/Falso</h2>
+<p class="sub">Las 5 del parcial real están marcadas con ★. Respondé, leé la justificación y repetí las falladas.</p>
+<div class="card"><div class="row">
+<label>Tema <select id="vf-tema"></select></label>
+<button class="btn" id="vf-exam">🎯 Modo examen (5 al azar)</button>
+<button class="btn g" id="vf-all">Todas</button>
+<button class="btn g" id="vf-wrong">Repasar falladas</button></div>
+<div class="row"><span class="mut" id="vf-stat"></span></div></div>
+<div class="card" id="vf-card"><p class="mut">Elegí un modo para empezar.</p></div>
+</section>
+
+<!-- ============ FÓRMULAS ============ -->
+<section class="tab" id="fx">
+<h2>Hoja de fórmulas (copiar y pegar)</h2>
+<p class="sub">Texto plano. Cada bloque tiene su botón de copiar.</p>
+<pre class="ans">MÉTRICAS CLASIFICACIÓN
+accuracy = (TP+TN)/(TP+TN+FP+FN)
+precision = TP/(TP+FP)
+recall = TPR = TP/(TP+FN)
+especificidad = TN/(TN+FP)
+FPR = FP/(FP+TN) = 1 − especificidad
+F1 = 2·precision·recall/(precision+recall) = 2TP/(2TP+FP+FN)
+umbral óptimo con costos: t* = C_FP/(C_FP+C_FN)
+costo total = C_FN·FN + C_FP·FP
+AUC (pares) = [#(s+ > s−) + 0,5·#(s+ = s−)]/(P·N)
+AUC (una matriz) = (1 + TPR − FPR)/2
+AP = Σ (R_k − R_k−1)·P_k        base PR = P/(P+N)
+
+MÉTRICAS REGRESIÓN
+MAE = (1/n)·Σ|y − ŷ|      MSE = (1/n)·Σ(y − ŷ)²      RMSE = √MSE
+RSS = Σ(y − ŷ)²           TSS = Σ(y − ȳ)²            R² = 1 − RSS/TSS</pre>
+<pre class="ans">ÁRBOLES
+Gini: G = 1 − Σ p_k²                 (puro 0; máx binario 0,5)
+Entropía: D = −Σ p_k·log2(p_k)       (puro 0; máx binario 1)
+Error: E = 1 − máx p_k
+TGI = Σ (n_h/n)·G_h                  → raíz = MENOR TGI
+IG = D(padre) − Σ (n_h/n)·D_h        → MAYOR IG
+RSS (regresión) = Σ_j Σ_(i∈Rj) (y_i − ȳ_Rj)²
+Poda: RSS(T) + α·|T|                 (α por CV)
+
+RANDOM FOREST
+bootstrap tamaño n · m ≈ √p variables por nodo · voto mayoritario
+P(no sale en bootstrap) = (1 − 1/n)^n → 1/e ≈ 0,368
+
+ADABOOST
+w_i = 1/N
+ε = Σ w_i · 1[mal clasificado]
+α = ½·ln((1 − ε)/ε)
+mal clasificado: w·e^(+α)      bien clasificado: w·e^(−α)
+normalizar: Σ w = 1            (mal clasificados suman 0,5)
+F(x) = Σ α_b·f_b(x)            predicción = signo(F(x))</pre>
+<pre class="ans">REGRESIÓN LINEAL
+β1 = Σ(x − x̄)(y − ȳ)/Σ(x − x̄)²      β0 = ȳ − β1·x̄      β̂ = (XᵀX)⁻¹Xᵀy
+RSE = √(RSS/(n − p − 1))              R² = 1 − RSS/TSS
+SE(β1) = RSE/√Σ(x − x̄)²              t = β1/SE(β1) ~ t(n−2)      IC95% ≈ β1 ± 2·SE
+F = ((TSS − RSS)/p)/(RSS/(n − p − 1))
+R² aj = 1 − [RSS/(n − p − 1)]/[TSS/(n − 1)]       VIF = 1/(1 − R²_Xj|resto)
+
+PCA
+z = (x − μ)/σ        max vᵀΣv  s.a.  vᵀv = 1   →   Σv = λv
+PVE_m = λ_m/Σ λ_j    scores = Z·V
+2×2: λ² − traza·λ + det = 0        con correlación r: λ = 1 ± r
+
+CLUSTERING
+d(x,μ) = √Σ_j (x_j − μ_j)²
+WCSS = Σ_k Σ_(x∈Ck) ‖x − μ_k‖²       TSS = WCSS + BCSS
+silueta s = (b − a)/máx(a, b)
+GMM: P(x) = Σ_k π_k·N(x | μ_k, Σ_k)</pre>
+</section>
+
+<!-- ============ PALACIO ============ -->
+<section class="tab" id="pal">
+<h2>Palacio mental</h2>
+<p class="sub">Recorrelo siempre en el mismo orden. Cada objeto es un gancho. (Hay un HTML aparte, “Mansión CCA”, con la versión extendida.)</p>
+
+<div class="card key"><div class="lbl">Parte A · El colegio (ML)</div>
+<h4>🚪 Recibidor: el portero (árbol)</h4>
+<p>Un portero con un cartel de preguntas sí/no. Cada pregunta parte a la gente en dos. Quiere grupos <b>puros</b> (Gini = 1 − Σp²). Hace overfitting si memoriza a cada persona → hay que <b>podarlo</b> (RSS + α·hojas).</p>
+<h4>🛋 Living: el bosque (Random Forest)</h4>
+<p>100 porteros votando. Cada uno vio una muestra distinta (bootstrap) y solo pregunta por algunas variables al azar (m ≈ √p). <b>En paralelo</b>, voto igual → baja la <b>varianza</b>. Un tercio de la gente nunca pasó por cada portero (OOB, 1/e).</p>
+<h4>🎞 Pasillo: la fila de porteros chiquitos (AdaBoost)</h4>
+<p>Porteros de <b>una sola pregunta</b> (stumps), <b>en secuencia</b>. A quien el anterior dejó pasar mal le ponen un cartel gigante (peso ↑). Cada uno vota con su peso α = ½·ln((1−ε)/ε). Veredicto = signo(Σα·f). Baja el <b>sesgo</b>.</p>
+<h4>🕰 Cuarto del reloj al revés: métricas</h4>
+<p>Reloj que gira al revés: en TP/FP/TN/FN la 1ª letra dice si <b>acerté</b> y la 2ª lo que <b>predije</b>. Cuatro trofeos en orden: accuracy, precision, recall, F1. Una perilla (el umbral) que sube y baja las falsas alarmas.</p>
+<h4>📐 Cuarto de la recta: regresión</h4>
+<p>Una regla que pasa por la nube de puntos minimizando los cuadrados de las distancias (RSS). R² es qué parte de la nube explica la recta.</p>
+<h4>🔦 Estudio de sombras: PCA</h4>
+<p>17 reflectores sobre la misma estatua: buscás el ángulo de la sombra más larga (PC1), la siguiente a 90° (PC2). Guardás sombras hasta el 80–85%. Σv = λv.</p>
+<h4>🎉 Patio de la fiesta: clustering</h4>
+<p>Banderines (K-Means) · árbol genealógico (jerárquico, dendrograma) · ronda de vecinos con uno solo en el fondo = ruido (DBSCAN) · chicos de dos barrios a la vez (GMM, soft).</p></div>
+
+<div class="card"><div class="lbl">Parte B · La casa de IA (6 ambientes)</div>
+<ul>
+<li><b>🚪 Puerta (Turing):</b> dos puertas A y B, un teletipo (solo texto), un robot detrás de una, un calendario en el 2000 con “70%”, 9 post-its de objeciones, una cuna (niño-máquina), un control remoto universal (universalidad).</li>
+<li><b>🛋 Living (Gutterman):</b> actuario mirando un espejo retrovisor (datos históricos), robot mudo (caja negra), mano en la panza (gut check), cartel “el modelo lo dijo” tachado.</li>
+<li><b>🍳 Cocina (Sesgo):</b> heladera con imán de código postal (proxy), riñón con dos etiquetas 53 y 36 (eGFR), recetario “the data is not the data”, escalera apoyada en el piso (ASOPs = piso).</li>
+<li><b>💼 Estudio (GenAI):</b> mesa redonda de 13 sillas, loro Copilot, alfombra RAG, robot con gafete de “empleado nuevo”, corazón “intención”.</li>
+<li><b>🛏 Dormitorio (Longevidad):</b> dos cuadros (Lee-Carter y CBD), alguien que salta curado de la cama (step-change), smartwatch (wearables), sticker +18,7%, frascos “híbrido” y “XAI”.</li>
+<li><b>🔧 Garage (Bulletin):</b> velocímetro al revés (METR +24% / −19%), 4 cajones (Govern, Map, Measure, Manage), escalera de 4 escalones, balanza (fairness), dos carpetas (silent vs affirmative AI).</li></ul></div>
+</section>
+</main>
+<div class="wrap foot"><p><b>Sobre el material:</b> los datos, cifras y ejemplos salen de tus láminas, papers y del parcial. Los problemas resueltos, las recetas, los V/F y el generador son elaboración propia, verificados con código. Si tu profe resolvió algo distinto en clase, prevalece lo de clase.</p></div>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=s=>parseFloat(String(s).trim().replace(',','.'));
+const f=(x,d=3)=>{ if(x===undefined||x===null||!isFinite(x)) return '—'; return (+x).toFixed(d).replace('.',','); };
+const store={get(k,def){try{const v=localStorage.getItem(k);return v===null?def:JSON.parse(v)}catch(e){return def}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- tabs ---------- */
+function showTab(id){
+  if(!document.getElementById(id)) id='exam';
+  $$('section.tab').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('#tabbar button').forEach(b=>b.classList.toggle('on',b.dataset.t===id));
+  window.scrollTo(0,0);
+  try{history.replaceState(null,'','#'+id)}catch(e){}
+}
+$('#tabbar').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) showTab(b.dataset.t)});
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,textarea,select')) return;
+  if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight') return;
+  const bs=$$('#tabbar button'); const i=bs.findIndex(b=>b.classList.contains('on'));
+  const n=e.key==='ArrowRight'?Math.min(i+1,bs.length-1):Math.max(i-1,0); bs[n].click(); bs[n].scrollIntoView({block:'nearest',inline:'center'});
+});
+
+/* ---------- copy buttons ---------- */
+function copyText(t,btn){
+  const done=()=>{const o=btn.textContent; btn.textContent='¡Copiado!'; setTimeout(()=>btn.textContent=o,1200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>fallback())}else fallback();
+  function fallback(){const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy')}catch(e){} ta.remove(); done();}
+}
+function addCopy(root){
+  (root||document).querySelectorAll('pre.ans').forEach(p=>{
+    if(p.dataset.raw!==undefined) return;
+    p.dataset.raw=p.textContent;
+    const b=document.createElement('button'); b.className='cp'; b.type='button'; b.textContent='Copiar';
+    b.addEventListener('click',()=>copyText(p.dataset.raw,b)); p.appendChild(b);
+  });
+}
+
+/* ---------- calc nav ---------- */
+$('#calcnav').addEventListener('click',e=>{
+  const p=e.target.closest('.pill'); if(!p) return;
+  $$('#calcnav .pill').forEach(x=>x.classList.toggle('on',x===p));
+  $$('#calc .sec').forEach(s=>s.classList.toggle('on',s.id==='c-'+p.dataset.c));
+});
+
+/* ---------- shared math ---------- */
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const fl=n=>`${n} fila${n===1?'':'s'}`;
+function parseRows(text){return text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(l=>l.split(/[,;\t]+|\s+/).map(x=>x.trim()).filter(x=>x!==''))}
+
+/* ============ MÉTRICAS ============ */
+function parseData(text){
+  const out=[];
+  parseRows(text).forEach(r=>{const n=r.map(num).filter(x=>isFinite(x)); if(n.length>=2){const y=n[n.length-2], s=n[n.length-1]; if(y===0||y===1) out.push({y,s});}});
+  return out;
+}
+function confusion(data,t){let TP=0,FP=0,TN=0,FN=0; data.forEach(d=>{const p=d.s>=t?1:0; if(d.y===1&&p===1)TP++; else if(d.y===0&&p===1)FP++; else if(d.y===0&&p===0)TN++; else FN++;}); return {TP,FP,TN,FN};}
+function metr(c){const N=c.TP+c.FP+c.TN+c.FN, P=c.TP+c.FN, Q=c.FP+c.TN; return {N,P,Q,acc:(c.TP+c.TN)/N,prec:c.TP/(c.TP+c.FP),rec:c.TP/P,spec:c.TN/Q,fpr:c.FP/Q,f1:2*c.TP/(2*c.TP+c.FP+c.FN)};}
+function curve(data){
+  const P=data.filter(d=>d.y===1).length, Q=data.length-P;
+  const ts=[...new Set(data.map(d=>d.s))].sort((a,b)=>b-a);
+  const pts=[{t:Infinity,tp:0,fp:0,fpr:0,tpr:0,prec:NaN}];
+  ts.forEach(t=>{const tp=data.filter(d=>d.s>=t&&d.y===1).length, fp=data.filter(d=>d.s>=t&&d.y===0).length; pts.push({t,tp,fp,fpr:fp/Q,tpr:tp/P,prec:tp/(tp+fp)});});
+  return {pts,P,Q};
+}
+function aucTrap(pts){let a=0; for(let i=1;i<pts.length;i++) a+=(pts[i].fpr-pts[i-1].fpr)*(pts[i].tpr+pts[i-1].tpr)/2; return a;}
+function aucPairs(data){const pos=data.filter(d=>d.y===1).map(d=>d.s), neg=data.filter(d=>d.y===0).map(d=>d.s); let t=0; pos.forEach(p=>neg.forEach(n=>{if(p>n)t++; else if(p===n)t+=.5;})); return t/(pos.length*neg.length);}
+function avgPrec(pts){let ap=0,rp=0; pts.slice(1).forEach(p=>{ap+=(p.tpr-rp)*p.prec; rp=p.tpr;}); return ap;}
+function bestThreshold(data,cfp,cfn){
+  const ts=[...new Set(data.map(d=>d.s))].sort((a,b)=>b-a);
+  const P=data.filter(d=>d.y===1).length;
+  let best={t:Infinity,cost:cfn*P,c:{TP:0,FP:0,FN:P,TN:data.length-P}};
+  ts.forEach(t=>{const c=confusion(data,t); const cost=cfn*c.FN+cfp*c.FP; if(cost<best.cost-1e-12) best={t,cost,c};});
+  return best;
+}
+function chart(pts,xk,yk,cur,opts){
+  const X=v=>30+v*190, Y=v=>200-v*190; let s=`<svg class="ch" viewBox="0 0 240 225" width="270" role="img" aria-label="${esc(opts.title)}">`;
+  [0,.5,1].forEach(v=>{s+=`<line x1="${X(v)}" y1="10" x2="${X(v)}" y2="200" stroke="currentColor" opacity=".12"/><line x1="30" y1="${Y(v)}" x2="220" y2="${Y(v)}" stroke="currentColor" opacity=".12"/><text x="${X(v)-4}" y="212">${v}</text><text x="12" y="${Y(v)+3}">${v}</text>`;});
+  if(opts.diag) s+=`<line x1="${X(0)}" y1="${Y(0)}" x2="${X(1)}" y2="${Y(1)}" stroke="#98a2b3" stroke-dasharray="3 3"/>`;
+  if(opts.base!==undefined) s+=`<line x1="${X(0)}" y1="${Y(opts.base)}" x2="${X(1)}" y2="${Y(opts.base)}" stroke="#98a2b3" stroke-dasharray="3 3"/>`;
+  const P=pts.filter(p=>isFinite(p[xk])&&isFinite(p[yk]));
+  s+=`<polyline fill="none" stroke="#5aa2ff" stroke-width="2" points="${P.map(p=>X(p[xk])+','+Y(p[yk])).join(' ')}"/>`;
+  P.forEach(p=>{s+=`<circle cx="${X(p[xk])}" cy="${Y(p[yk])}" r="2.4" fill="#5aa2ff"/>`;});
+  if(cur&&isFinite(cur[xk])&&isFinite(cur[yk])) s+=`<circle cx="${X(cur[xk])}" cy="${Y(cur[yk])}" r="5" fill="none" stroke="#fbbf24" stroke-width="2"/>`;
+  s+=`<text x="${X(.5)-36}" y="223">${opts.xl}</text><text x="2" y="8">${opts.yl}</text></svg>`;
+  return s;
+}
+function solveMetricsText(data,t,cfp,cfn){
+  const c=confusion(data,t), m=metr(c);
+  const l=[];
+  l.push(`Regla: se predice 1 si score ≥ ${f(t,2)}`);
+  l.push('');
+  l.push('                  Predicho 1     Predicho 0');
+  l.push(`Real 1            TP = ${c.TP}${' '.repeat(Math.max(1,9-String(c.TP).length))}FN = ${c.FN}`);
+  l.push(`Real 0            FP = ${c.FP}${' '.repeat(Math.max(1,9-String(c.FP).length))}TN = ${c.TN}`);
+  l.push('');
+  l.push(`Accuracy  = (TP+TN)/N  = (${c.TP}+${c.TN})/${m.N} = ${f(m.acc)}`);
+  l.push(`Precision = TP/(TP+FP) = ${c.TP}/(${c.TP}+${c.FP}) = ${f(m.prec)}`);
+  l.push(`Recall    = TP/(TP+FN) = ${c.TP}/(${c.TP}+${c.FN}) = ${f(m.rec)}`);
+  l.push(`F1 = 2TP/(2TP+FP+FN) = ${f(m.f1)}      FPR = FP/(FP+TN) = ${f(m.fpr)}      Especificidad = ${f(m.spec)}`);
+  return l.join('\n');
+}
+function renderMetrics(){
+  const out=$('#mt-out'), data=parseData($('#mt-data').value);
+  if(data.length<2||data.every(d=>d.y===1)||data.every(d=>d.y===0)){out.innerHTML='<div class="card bad">Ingresá filas “y_real, score” con al menos un 1 y un 0.</div>';return;}
+  const t=num($('#mt-thr').value), cfp=num($('#mt-cfp').value)||0, cfn=num($('#mt-cfn').value)||0;
+  $('#mt-sl').value=Math.min(1,Math.max(0,t));
+  const c=confusion(data,t), m=metr(c), cv=curve(data), auc=aucTrap(cv.pts), aucp=aucPairs(data), ap=avgPrec(cv.pts);
+  const cur={fpr:m.fpr,tpr:m.rec,rec:m.rec,prec:m.prec};
+  const best=bestThreshold(data,cfp,cfn), cost=cfn*c.FN+cfp*c.FP, tstar=(cfp+cfn)>0?cfp/(cfp+cfn):NaN;
+  const prev=data.filter(d=>d.y===1).length/data.length;
+  let h=`<div class="card"><div class="lbl">Matriz de confusión · umbral ${f(t,2)}</div>
+  <table class="cm"><tr><th></th><th>Predicho 1</th><th>Predicho 0</th></tr>
+  <tr><th>Real 1</th><td class="tp">TP = ${c.TP}</td><td class="fn">FN = ${c.FN}</td></tr>
+  <tr><th>Real 0</th><td class="fp">FP = ${c.FP}</td><td class="tn">TN = ${c.TN}</td></tr></table>
+  <div class="kv"><div>Accuracy<b>${f(m.acc)}</b></div><div>Precision<b>${f(m.prec)}</b></div><div>Recall (TPR)<b>${f(m.rec)}</b></div><div>F1<b>${f(m.f1)}</b></div><div>FPR<b>${f(m.fpr)}</b></div><div>Especificidad<b>${f(m.spec)}</b></div></div></div>`;
+  h+=`<div class="card"><div class="lbl">Resolución en formato examen</div><pre class="ans">${esc(solveMetricsText(data,t,cfp,cfn))}</pre></div>`;
+  h+=`<div class="card"><div class="lbl">Costos: C_FP = ${cfp} · C_FN = ${cfn}</div>
+  <p>Costo total con t = ${f(t,2)}: <b>${cfn}·${c.FN} + ${cfp}·${c.FP} = ${f(cost,0)}</b>.
+  ${cfn>cfp?'<b>FN más caro que FP → bajar el umbral</b> (más recall, más falsas alarmas).':cfn<cfp?'<b>FP más caro que FN → subir el umbral</b> (más precision).':'Costos iguales: no hay sesgo hacia ningún error.'}</p>
+  <p>Umbral teórico t* = C_FP/(C_FP+C_FN) = <b>${f(tstar,3)}</b> (si los scores son probabilidades calibradas). Entre los umbrales de esta muestra, el de menor costo es <b>${best.t===Infinity?'“no predecir ningún positivo”':'t = '+f(best.t,2)}</b> con costo ${f(best.cost,0)} (FN=${best.c.FN}, FP=${best.c.FP}).</p></div>`;
+  h+=`<div class="grid2"><div class="card"><div class="lbl">Curva ROC (TPR vs FPR)</div>${chart(cv.pts,'fpr','tpr',cur,{title:'ROC',xl:'FPR',yl:'TPR',diag:true})}
+  <p style="margin-top:8px">AUC (trapecios) = <b>${f(auc)}</b> · AUC (pares) = <b>${f(aucp)}</b></p></div>
+  <div class="card"><div class="lbl">Curva Precision-Recall</div>${chart(cv.pts.slice(1).map(p=>({rec:p.tpr,prec:p.prec})),'rec','prec',cur,{title:'PR',xl:'recall',yl:'precision',base:prev})}
+  <p style="margin-top:8px">Average Precision = <b>${f(ap)}</b> · base = prevalencia = ${f(prev)}</p></div></div>`;
+  h+=`<div class="card"><div class="lbl">Tabla madre: un umbral por cada score (de mayor a menor)</div><div class="tw"><table class="t"><tr><th class="n">Umbral</th><th class="n">TP</th><th class="n">FP</th><th class="n">TPR</th><th class="n">FPR</th><th class="n">Precision</th></tr>`;
+  cv.pts.forEach((p,i)=>{h+=`<tr${p.t===t&&i>0?' class="hl"':''}><td class="n">${i===0?'(0,0) · ∞':f(p.t,2)}</td><td class="n">${p.tp}</td><td class="n">${p.fp}</td><td class="n">${f(p.tpr)}</td><td class="n">${f(p.fpr)}</td><td class="n">${i===0?'—':f(p.prec)}</td></tr>`;});
+  h+=`</table></div></div>`;
+  out.innerHTML=h; addCopy(out);
+}
+['mt-data','mt-thr','mt-cfp','mt-cfn'].forEach(id=>$('#'+id).addEventListener('input',renderMetrics));
+$('#mt-sl').addEventListener('input',e=>{$('#mt-thr').value=e.target.value; renderMetrics();});
+
+/* ============ ÁRBOL / GINI ============ */
+function splitTable(text){return text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(l=>l.split(/[,;\t]+/).map(x=>x.trim()));}
+function counts(rows,tIdx,classes){return classes.map(c=>rows.filter(r=>r[tIdx]===c).length);}
+function imp(cn,crit){const n=sum(cn); if(!n) return 0; return crit==='g'?1-sum(cn.map(c=>(c/n)**2)):-sum(cn.map(c=>c>0?(c/n)*Math.log2(c/n):0));}
+function impText(cn,crit){
+  const n=sum(cn), v=imp(cn,crit);
+  if(crit==='g') return `1 − ${cn.map(c=>`(${c}/${n})²`).join(' − ')} = ${f(v)}`;
+  const t=cn.filter(c=>c>0).map(c=>`(${c}/${n})·log2(${c}/${n})`); return `−${t.join(' − ')||'0'} = ${f(v)}`;
+}
+function candidates(rows,col,tIdx){
+  const vals=rows.map(r=>r[col]);
+  const numeric=vals.every(v=>isFinite(num(v)))&&new Set(vals).size>2;
+  if(numeric){
+    const u=[...new Set(vals.map(num))].sort((a,b)=>a-b), out=[];
+    for(let i=0;i<u.length-1;i++){const s=(u[i]+u[i+1])/2; out.push({col,numeric:true,label:`X${col+1} < ${f(s,2).replace(/,00$/,'')}`,groups:[{name:`< ${f(s,2)}`,rows:rows.filter(r=>num(r[col])<s)},{name:`≥ ${f(s,2)}`,rows:rows.filter(r=>num(r[col])>=s)}]});}
+    return out;
+  }
+  return [{col,numeric:false,label:null,groups:[...new Set(vals)].map(v=>({name:v,rows:rows.filter(r=>r[col]===v)}))}];
+}
+function evalSplit(cand,tIdx,classes,crit,parentImp){
+  const N=sum(cand.groups.map(g=>g.rows.length));
+  const gi=cand.groups.map(g=>{const cn=counts(g.rows,tIdx,classes); return {name:g.name,rows:g.rows,cn,n:g.rows.length,imp:imp(cn,crit)};});
+  const w=sum(gi.map(g=>g.n/N*g.imp));
+  return Object.assign({},cand,{gi,N,w,gain:parentImp-w});
+}
+function bestSplit(rows,cols,tIdx,classes,crit,header){
+  const parent=imp(counts(rows,tIdx,classes),crit); let best=null;
+  cols.forEach(col=>candidates(rows,col,tIdx).forEach(c=>{
+    if(c.groups.length<2) return; const e=evalSplit(c,tIdx,classes,crit,parent);
+    if(!best||e.w<best.w-1e-12) best=e;
+  }));
+  if(best&&!best.label) best.label=header[best.col];
+  return best;
+}
+function splitText(rows,cols,tIdx,header,crit){
+  const classes=[...new Set(rows.map(r=>r[tIdx]))], cn0=counts(rows,tIdx,classes), parent=imp(cn0,crit), N=rows.length;
+  const nm=crit==='g'?'G':'D', agg=crit==='g'?'TGI':'Entropía ponderada';
+  const L=[]; const lab=cn=>classes.map((c,i)=>`${cn[i]} ${c}`).join(', ');
+  L.push(crit==='g'?'G = 1 − Σ p_k²     TGI = Σ (n_h/n)·G_h     → raíz = MENOR TGI':'D = −Σ p_k·log2 p_k     IG = D(padre) − Σ (n_h/n)·D_h     → raíz = MAYOR IG');
+  L.push(''); L.push(`Padre (${fl(N)}: ${lab(cn0)}): ${nm} = ${impText(cn0,crit)}`);
+  let best=null; const all=[];
+  cols.forEach(col=>{
+    candidates(rows,col,tIdx).forEach(c=>{
+      if(c.groups.length<2) return; const e=evalSplit(c,tIdx,classes,crit,parent); if(!e.label) e.label=header[col];
+      all.push(e); L.push('');
+      L.push(`Corte por ${e.label}:`);
+      e.gi.forEach(g=>L.push(`  ${g.name} (${fl(g.n)}: ${lab(g.cn)}): ${nm} = ${impText(g.cn,crit)}`));
+      L.push(`  ${crit==='g'?'TGI':'Σ(n_h/n)·D_h'}(${e.label}) = ${e.gi.map(g=>`${g.n}/${N}·${f(g.imp)}`).join(' + ')} = ${f(e.w)}`+(crit==='e'?`   →  IG = ${f(parent)} − ${f(e.w)} = ${f(e.gain)}`:''));
+      if(!best||e.w<best.w-1e-12) best=e;
+    });
+  });
+  L.push('');
+  if(best) L.push(crit==='g'?`Menor TGI = ${f(best.w)} → la RAÍZ es ${best.label} (ganancia = ${f(parent)} − ${f(best.w)} = ${f(best.gain)}).`:`Mayor IG = ${f(best.gain)} → la RAÍZ es ${best.label}.`);
+  return {text:L.join('\n'),best,all,classes,parent};
+}
+function treeLines(rows,cols,tIdx,classes,crit,header,pre){
+  const cn=counts(rows,tIdx,classes), G=imp(cn,crit), info=`[${classes.map((c,i)=>cn[i]?`${cn[i]} ${c}`:null).filter(Boolean).join(' / ')}]`;
+  const mx=Math.max(...cn), maj=classes.filter((c,i)=>cn[i]===mx);
+  const leaf=`→ HOJA: ${maj.length>1?maj.join('/')+' (empate)':maj[0]} ${info}`;
+  if(G<1e-12||!cols.length||rows.length<2) return [leaf];
+  const best=bestSplit(rows,cols,tIdx,classes,crit,header);
+  if(!best||best.w>=G-1e-12) return [leaf];
+  const lines=[`${pre===''?'':'→ '}${best.label}?  ${info}  ${crit==='g'?'TGI':'Σ(n/N)·D'} = ${f(best.w)}`];
+  const rest=best.numeric?cols:cols.filter(c=>c!==best.col);
+  best.gi.forEach((g,i)=>{
+    const last=i===best.gi.length-1, sub=treeLines(g.rows,rest,tIdx,classes,crit,header,pre+(last?'   ':'│  '));
+    lines.push(pre+(last?'└─ ':'├─ ')+(best.numeric?best.label.split('<')[0]+g.name:header[best.col]+' = '+g.name)+'  '+sub[0]); sub.slice(1).forEach(x=>lines.push(x));
+  });
+  return lines;
+}
+function giRefreshTargets(){
+  const T=splitTable($('#gi-data').value); const sel=$('#gi-target'); const cur=sel.value;
+  if(!T.length) return; const h=T[0];
+  sel.innerHTML=h.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('');
+  sel.value=(cur&&+cur<h.length)?cur:String(h.length-1);
+}
+function giGo(){
+  const T=splitTable($('#gi-data').value), out=$('#gi-out');
+  if(T.length<3){out.innerHTML='<div class="card bad">Pegá una tabla con encabezado y al menos 2 filas.</div>';return;}
+  const header=T[0], rows=T.slice(1).filter(r=>r.length===header.length), tIdx=+$('#gi-target').value, crit=$('#gi-crit').value;
+  const cols=header.map((_,i)=>i).filter(i=>i!==tIdx);
+  if(rows.length<2||!cols.length){out.innerHTML='<div class="card bad">Revisá el formato (misma cantidad de columnas en todas las filas).</div>';return;}
+  const r=splitText(rows,cols,tIdx,header,crit);
+  let h=`<div class="card"><div class="lbl">Cálculo paso a paso (para escribir en el examen)</div><pre class="ans">${esc(r.text)}</pre></div>`;
+  h+=`<div class="card"><div class="lbl">Resumen de cortes</div><div class="tw"><table class="t"><tr><th>Corte</th><th class="n">${crit==='g'?'TGI':'Σ(n/N)·D'}</th><th class="n">Ganancia</th></tr>`;
+  r.all.slice().sort((a,b)=>a.w-b.w).forEach(e=>{h+=`<tr${e===r.best?' class="hl"':''}><td>${esc(e.label)}</td><td class="n">${f(e.w)}</td><td class="n">${f(e.gain)}</td></tr>`;});
+  h+=`</table></div></div>`;
+  const tl=treeLines(rows,cols,tIdx,r.classes,crit,header,'');
+  h+=`<div class="card"><div class="lbl">Árbol completo (recursive binary splitting, greedy)</div><pre class="ans">${esc(tl.join('\n'))}</pre><p class="mut" style="margin:0">Se corta al llegar a nodo puro, sin variables, o cuando ningún corte reduce la impureza. Cada hoja predice la moda.</p></div>`;
+  out.innerHTML=h; addCopy(out);
+}
+$('#gi-go').addEventListener('click',giGo);
+$('#gi-data').addEventListener('input',giRefreshTargets);
+$('#gi-crit').addEventListener('change',giGo);
+$('#gi-target').addEventListener('change',giGo);
+
+/* ============ ADABOOST VOTO ============ */
+const AV_DEF=[['Edad < 25',0.973,'No'],['Siniestros previos',1.28,'No'],['Antigüedad vehículo > 10',0.92,'Sí'],['Km anuales > 20.000',0.92,'Sí'],['Uso comercial',1,'Sí'],['Licencia < 3 años',1.2,'No']];
+function avRows(){return $$('#av-body tr').map(tr=>({cond:tr.querySelector('.c').value,a:num(tr.querySelector('.a').value),yes:tr.querySelector('.y').value==='Sí'}));}
+function avBuild(rows){
+  $('#av-body').innerHTML=rows.map((r,i)=>`<tr><td>${i+1}</td><td><input class="c" value="${esc(r[0])}" size="22"></td><td><input class="a" type="number" step="any" value="${r[1]}"></td><td><select class="y"><option${r[2]==='Sí'?' selected':''}>Sí</option><option${r[2]==='No'?' selected':''}>No</option></select></td><td><button class="btn g del" type="button">✕</button></td></tr>`).join('');
+  avRender();
+}
+function avRender(){
+  const R=avRows(), pos=$('#av-pos').value, neg=$('#av-neg').value; let S=0, up=0, dn=0;
+  let h=`<div class="card"><div class="lbl">Voto ponderado</div><div class="tw"><table class="t"><tr><th>#</th><th>Condición</th><th>¿Cumple?</th><th class="n">f(x)</th><th class="n">α</th><th class="n">α·f(x)</th></tr>`;
+  R.forEach((r,i)=>{const v=r.yes?1:-1, w=(isFinite(r.a)?r.a:0)*v; S+=w; if(v>0) up+=Math.abs(w); else dn+=Math.abs(w); h+=`<tr><td>${i+1}</td><td>${esc(r.cond)}</td><td>${r.yes?'Sí':'No'}</td><td class="n">${v>0?'+1':'−1'}</td><td class="n">${f(r.a)}</td><td class="n">${w>=0?'+':'−'}${f(Math.abs(w))}</td></tr>`;});
+  h+=`<tr><th colspan="5">F(x) = Σ α_m·f_m(x)</th><th class="n">${S>=0?'+':'−'}${f(Math.abs(S))}</th></tr></table></div>`;
+  const cls=S>0?+1:S<0?-1:0;
+  h+=`<pre class="ans">${esc(`F(x) = ${R.map(r=>`${r.yes?'+':'−'}${f(r.a)}`).join(' ')} = ${S>=0?'':'−'}${f(Math.abs(S))}\nPredicción = signo(F(x)) = ${cls===0?'0 (empate)':(cls>0?'+1':'−1')}  →  ${cls===0?'sin decisión':(cls>0?pos:neg).toUpperCase()}\nVotos a favor de "${pos}": ${f(up)}   Votos a favor de "${neg}": ${f(dn)}   Diferencia: ${f(Math.abs(S))}`)}</pre></div>`;
+  $('#av-out').innerHTML=h; addCopy($('#av-out'));
+}
+$('#av-add').addEventListener('click',()=>{const R=$$('#av-body tr').map(tr=>[tr.querySelector('.c').value,tr.querySelector('.a').value,tr.querySelector('.y').value]); R.push(['Nuevo stump',1,'Sí']); avBuild(R);});
+$('#av-body').addEventListener('input',avRender); $('#av-body').addEventListener('change',avRender);
+$('#av-body').addEventListener('click',e=>{const b=e.target.closest('.del'); if(!b) return; const R=$$('#av-body tr').filter(tr=>tr!==b.closest('tr')).map(tr=>[tr.querySelector('.c').value,tr.querySelector('.a').value,tr.querySelector('.y').value]); avBuild(R);});
+['av-pos','av-neg'].forEach(id=>$('#'+id).addEventListener('input',avRender));
+
+/* ============ ADABOOST PESOS ============ */
+function apRender(){
+  const eps0=num($('#ap-eps').value);
+  if(isFinite(eps0)&&eps0>0&&eps0<1){const a=.5*Math.log((1-eps0)/eps0); $('#ap-a').innerHTML=`α = ½·ln((1−ε)/ε) = <b>${f(a)}</b> · e^α = ${f(Math.exp(a))} · e^−α = ${f(Math.exp(-a))}`;}
+  else $('#ap-a').textContent=eps0===0.5?'α = 0':'ε entre 0 y 1';
+  let W=[];
+  const custom=parseRows($('#ap-custom').value);
+  if(custom.length){custom.forEach(r=>{const w=num(r[0]); const bad=/^m/i.test(r[1]||''); if(isFinite(w)) W.push({w,bad});});}
+  else{const n=Math.max(2,Math.round(num($('#ap-n').value)||2)), k=Math.min(n,Math.max(0,Math.round(num($('#ap-k').value)||0))); for(let i=0;i<n;i++) W.push({w:1/n,bad:i<k});}
+  const out=$('#ap-out'); if(!W.length){out.innerHTML='';return;}
+  const tot=sum(W.map(x=>x.w)), eps=sum(W.filter(x=>x.bad).map(x=>x.w))/tot;
+  if(eps<=0||eps>=1){out.innerHTML=`<div class="card warn"><div class="lbl">ε = ${f(eps)}</div><p>Con ε = 0 o ε = 1 el α no está definido (infinito). En la práctica se acota.</p></div>`;return;}
+  const a=.5*Math.log((1-eps)/eps), up=Math.exp(a), dn=Math.exp(-a);
+  const un=W.map(x=>x.w/tot*(x.bad?up:dn)), S=sum(un), nw=un.map(v=>v/S);
+  let h=`<div class="card"><div class="lbl">Resultado</div><div class="kv"><div>ε<b>${f(eps)}</b></div><div>α<b>${f(a)}</b></div><div>e^α (sube)<b>${f(up)}</b></div><div>e^−α (baja)<b>${f(dn)}</b></div><div>Suma sin normalizar<b>${f(S)}</b></div></div>`;
+  h+=`<div class="tw"><table class="t"><tr><th>Obs.</th><th>Estado</th><th class="n">Peso antes</th><th class="n">Sin normalizar</th><th class="n">Normalizado</th></tr>`;
+  W.forEach((x,i)=>{h+=`<tr><td>${i+1}</td><td>${x.bad?'<span class="no">mal clasificada</span>':'<span class="ok">bien clasificada</span>'}</td><td class="n">${f(x.w/tot)}</td><td class="n">${f(un[i])}</td><td class="n">${f(nw[i])}</td></tr>`;});
+  h+=`</table></div>`;
+  const badSum=sum(nw.filter((_,i)=>W[i].bad));
+  h+=`<pre class="ans">${esc(`ε = suma de pesos de los mal clasificados = ${f(eps)}\nα = ½·ln((1−ε)/ε) = ½·ln(${f((1-eps)/eps)}) = ${f(a)}\nmal clasificado: w·e^α = w·${f(up)}     bien clasificado: w·e^−α = w·${f(dn)}\nSuma de pesos nuevos = ${f(S)} → se divide cada uno por ${f(S)}\nChequeo: mal clasificados normalizados suman ${f(badSum)} (debe ser 0,5)`)}</pre></div>`;
+  out.innerHTML=h; addCopy(out);
+}
+['ap-n','ap-k','ap-custom','ap-eps'].forEach(id=>$('#'+id).addEventListener('input',apRender));
+
+/* ============ REGRESIÓN ============ */
+function rgRender(){
+  const P=parseRows($('#rg-data').value).map(r=>r.map(num)).filter(r=>r.length>=2&&isFinite(r[0])&&isFinite(r[1])).map(r=>({x:r[0],y:r[1]})), out=$('#rg-out');
+  if(P.length<3){out.innerHTML='<div class="card bad">Necesito al menos 3 puntos “x, y”.</div>';return;}
+  const n=P.length, xb=sum(P.map(p=>p.x))/n, yb=sum(P.map(p=>p.y))/n, Sxx=sum(P.map(p=>(p.x-xb)**2)), Sxy=sum(P.map(p=>(p.x-xb)*(p.y-yb)));
+  if(Sxx===0){out.innerHTML='<div class="card bad">Todos los x son iguales.</div>';return;}
+  const b1=Sxy/Sxx, b0=yb-b1*xb, fit=P.map(p=>b0+b1*p.x), res=P.map((p,i)=>p.y-fit[i]), RSS=sum(res.map(e=>e*e)), TSS=sum(P.map(p=>(p.y-yb)**2)), R2=1-RSS/TSS, RSE=Math.sqrt(RSS/(n-2)), SE=RSE/Math.sqrt(Sxx), t=b1/SE, x0=num($('#rg-x0').value);
+  let h=`<div class="card"><div class="kv"><div>β₁<b>${f(b1)}</b></div><div>β₀<b>${f(b0)}</b></div><div>R²<b>${f(R2)}</b></div><div>RSE<b>${f(RSE)}</b></div><div>SE(β₁)<b>${f(SE)}</b></div><div>t<b>${f(t,2)}</b></div></div>
+  <div class="tw"><table class="t"><tr><th>#</th><th class="n">x</th><th class="n">y</th><th class="n">ŷ</th><th class="n">e = y − ŷ</th><th class="n">e²</th></tr>`;
+  P.forEach((p,i)=>{h+=`<tr><td>${i+1}</td><td class="n">${f(p.x,2)}</td><td class="n">${f(p.y,2)}</td><td class="n">${f(fit[i])}</td><td class="n">${f(res[i])}</td><td class="n">${f(res[i]**2)}</td></tr>`;});
+  h+=`</table></div><pre class="ans">${esc(`x̄ = ${f(xb)}   ȳ = ${f(yb)}   Σ(x−x̄)² = ${f(Sxx)}   Σ(x−x̄)(y−ȳ) = ${f(Sxy)}\nβ1 = ${f(Sxy)}/${f(Sxx)} = ${f(b1)}\nβ0 = ȳ − β1·x̄ = ${f(yb)} − ${f(b1)}·${f(xb)} = ${f(b0)}\nModelo: ŷ = ${f(b0)} + ${f(b1)}·x\nRSS = ${f(RSS)}   TSS = ${f(TSS)}   R² = 1 − RSS/TSS = ${f(R2)}\nRSE = √(RSS/(n−2)) = ${f(RSE)}   SE(β1) = RSE/√Σ(x−x̄)² = ${f(SE)}\nt = β1/SE(β1) = ${f(t,2)}   IC95% ≈ ${f(b1,3)} ± 2·${f(SE)} = [${f(b1-2*SE)}; ${f(b1+2*SE)}]\n`+(isFinite(x0)?`Predicción en x = ${f(x0,2)}: ŷ = ${f(b0+b1*x0)}\n`:'')+`Interpretación: por cada +1 en x, y cambia en promedio ${f(b1)}; la recta explica ${f(R2*100,1)}% de la varianza de y.`)}</pre></div>`;
+  out.innerHTML=h; addCopy(out);
+}
+['rg-data','rg-x0'].forEach(id=>$('#'+id).addEventListener('input',rgRender));
+
+/* ============ PCA ============ */
+function eig2(a,b,d){
+  const tr=a+d, det=a*d-b*b, disc=Math.sqrt(Math.max(0,((a-d)/2)**2+b*b)), l1=tr/2+disc, l2=tr/2-disc;
+  const vec=l=>{let v; if(Math.abs(b)>1e-12) v=[b,l-a]; else v=(Math.abs(l-a)<1e-12)?[1,0]:[0,1]; const nn=Math.hypot(v[0],v[1]); v=[v[0]/nn,v[1]/nn]; if(v[0]<0||(Math.abs(v[0])<1e-12&&v[1]<0)) v=[-v[0],-v[1]]; return v;};
+  return {tr,det,l1,l2,v1:vec(l1),v2:vec(l2)};
+}
+function pcRender(){
+  const mode=$('#pc-mode').value, out=$('#pc-out'); let a,b,d,extra='',scores='',pre='';
+  if(mode==='m'){a=num($('#pc-a').value);b=num($('#pc-b').value);d=num($('#pc-d').value); if(![a,b,d].every(isFinite)){out.innerHTML='';return;}}
+  else{
+    const P=parseRows($('#pc-data').value).map(r=>r.map(num)).filter(r=>r.length>=2&&isFinite(r[0])&&isFinite(r[1]));
+    if(P.length<3){out.innerHTML='<div class="card bad">Necesito al menos 3 filas “x1, x2”.</div>';return;}
+    const n=P.length, m1=sum(P.map(p=>p[0]))/n, m2=sum(P.map(p=>p[1]))/n, s1=Math.sqrt(sum(P.map(p=>(p[0]-m1)**2))/(n-1)), s2=Math.sqrt(sum(P.map(p=>(p[1]-m2)**2))/(n-1));
+    const Z=P.map(p=>[(p[0]-m1)/s1,(p[1]-m2)/s2]), r=sum(Z.map(z=>z[0]*z[1]))/(n-1); a=1;b=r;d=1;
+    pre=`Estandarización: x̄1=${f(m1)}, s1=${f(s1)}; x̄2=${f(m2)}, s2=${f(s2)}\nMatriz de correlación R = [[1, ${f(r)}], [${f(r)}, 1]]\n\n`;
+    window.__pcZ=Z;
+  }
+  const e=eig2(a,b,d), tot=e.l1+e.l2;
+  let h=`<div class="card"><div class="kv"><div>λ₁<b>${f(e.l1)}</b></div><div>λ₂<b>${f(e.l2)}</b></div><div>PVE₁<b>${f(e.l1/tot*100,1)}%</b></div><div>PVE₂<b>${f(e.l2/tot*100,1)}%</b></div></div>
+  <pre class="ans">${esc(pre+`S = [[${f(a)}, ${f(b)}], [${f(b)}, ${f(d)}]]   traza = ${f(e.tr)}   det = ${f(e.det)}\nEcuación característica: λ² − ${f(e.tr)}·λ + ${f(e.det)} = 0\nλ1 = ${f(e.l1)}   λ2 = ${f(e.l2)}   (suman la traza ${f(e.tr)})\nPVE1 = λ1/Σλ = ${f(e.l1)}/${f(tot)} = ${f(e.l1/tot)}   PVE2 = ${f(e.l2/tot)}\nAutovector de λ1 (PC1, normalizado): v1 = (${f(e.v1[0])}; ${f(e.v1[1])})\nAutovector de λ2 (PC2, ortogonal):   v2 = (${f(e.v2[0])}; ${f(e.v2[1])})\nChequeo: v1·v2 = ${f(e.v1[0]*e.v2[0]+e.v1[1]*e.v2[1])} (ortogonales)\nInterpretación: PC1 explica ${f(e.l1/tot*100,1)}% de la varianza; con una sola componente ya se resume casi toda la información si PVE1 es alto.`)}</pre>`;
+  if(mode==='d'&&window.__pcZ){h+=`<div class="tw"><table class="t"><tr><th>#</th><th class="n">z1</th><th class="n">z2</th><th class="n">PC1</th><th class="n">PC2</th></tr>`; window.__pcZ.forEach((z,i)=>{h+=`<tr><td>${i+1}</td><td class="n">${f(z[0])}</td><td class="n">${f(z[1])}</td><td class="n">${f(z[0]*e.v1[0]+z[1]*e.v1[1])}</td><td class="n">${f(z[0]*e.v2[0]+z[1]*e.v2[1])}</td></tr>`;}); h+=`</table></div>`;}
+  h+='</div>'; out.innerHTML=h; addCopy(out);
+}
+$('#pc-mode').addEventListener('change',()=>{const m=$('#pc-mode').value==='m'; $('#pc-m').style.display=m?'flex':'none'; $('#pc-dd').style.display=m?'none':'block'; pcRender();});
+$('#pc-go').addEventListener('click',pcRender); ['pc-a','pc-b','pc-d','pc-data'].forEach(id=>$('#'+id).addEventListener('input',pcRender));
+
+/* ============ K-MEANS ============ */
+let kmPrev=null;
+function kmParse(id){return parseRows($(id).value).map(r=>r.map(num)).filter(r=>r.length&&r.every(isFinite));}
+function kmRun(){
+  const P=kmParse('#km-pts'), C=kmParse('#km-cent'), out=$('#km-out');
+  if(P.length<2||C.length<1||P[0].length!==C[0].length){out.innerHTML='<div class="card bad">Revisá puntos y centroides (misma dimensión).</div>';return;}
+  const dist=(a,b)=>Math.sqrt(sum(a.map((v,i)=>(v-b[i])**2)));
+  const D=P.map(p=>C.map(c=>dist(p,c))), asg=D.map(d=>d.indexOf(Math.min(...d)));
+  const NC=C.map((c,k)=>{const m=P.filter((_,i)=>asg[i]===k); return m.length?c.map((_,j)=>sum(m.map(p=>p[j]))/m.length):c;});
+  const wc=sum(P.map((p,i)=>dist(p,NC[asg[i]])**2)), same=kmPrev&&kmPrev.join()===asg.join();
+  let h=`<div class="card"><div class="lbl">Una iteración</div><div class="tw"><table class="t"><tr><th>#</th><th>Punto</th>${C.map((_,k)=>`<th class="n">d a C${k+1}</th>`).join('')}<th>Grupo</th></tr>`;
+  P.forEach((p,i)=>{h+=`<tr><td>${i+1}</td><td>(${p.map(v=>f(v,2)).join('; ')})</td>${D[i].map((d,k)=>`<td class="n"${k===asg[i]?' style="font-weight:700"':''}>${f(d)}</td>`).join('')}<td>C${asg[i]+1}</td></tr>`;});
+  h+=`</table></div><pre class="ans">${esc(`d(x,μ) = √Σ(x_j − μ_j)²  → cada punto va al centroide más cercano\n`+NC.map((c,k)=>`Nuevo C${k+1} = promedio de sus ${asg.filter(a=>a===k).length} puntos = (${c.map(v=>f(v)).join('; ')})`).join('\n')+`\nWCSS = Σ ‖x − μ_k‖² (con los centroides nuevos) = ${f(wc)}`+(same?'\nLas asignaciones no cambiaron respecto de la iteración anterior → CONVERGIÓ.':'\nSi las asignaciones cambian, se repite con los nuevos centroides.'))}</pre></div>`;
+  kmPrev=asg; out.innerHTML=h; addCopy(out); window.__kmNC=NC;
+}
+$('#km-go').addEventListener('click',()=>{kmPrev=null;kmRun();});
+$('#km-next').addEventListener('click',()=>{if(!window.__kmNC){kmRun();return;} $('#km-cent').value=window.__kmNC.map(c=>c.map(v=>f(v,4).replace(',','.')).join(', ')).join('\n'); kmRun();});
+['km-pts','km-cent'].forEach(id=>$('#'+id).addEventListener('input',()=>{kmPrev=null;window.__kmNC=null;}));
+
+/* ============ BANCO V/F ============ */
+const VFB=[
+['ML general','Un modelo con overfitting tiene un error muy alto en el conjunto de entrenamiento y bajo en el de test.',false,'Es al revés: overfitting = error BAJO en entrenamiento y ALTO en test. El modelo memoriza el ruido y no generaliza.',1],
+['Feature Eng.','El feature engineering busca transformar y crear variables para mejorar la capacidad predictiva del modelo.',true,'Imputar, binning, transformaciones (log), codificación y agregaciones hacen que la señal sea más fácil de aprender.',1],
+['ML general','Todo modelo de deep learning es un caso particular de machine learning, pero no todo algoritmo de ML se basa en redes neuronales multicapa.',true,'IA ⊃ ML ⊃ DL. Árboles, regresión lineal o K-Means son ML y no son redes neuronales multicapa.',1],
+['Árboles','Aumentar la profundidad de un árbol suele disminuir el riesgo de overfitting.',false,'Más profundidad = más hojas y complejidad: baja el sesgo, sube la varianza y AUMENTA el overfitting. Se reduce limitando profundidad o podando.',1],
+['PCA','PCA reduce la dimensionalidad de los datos generando componentes no correlacionados que maximizan la varianza explicada.',true,'Las componentes son ortogonales; la 1ª maximiza la varianza y cada siguiente maximiza la que queda (Σv = λv).',1],
+['Métricas','Accuracy es una buena métrica cuando las clases están muy desbalanceadas.',false,'Con 3% de positivos, predecir siempre “0” da 97% de accuracy y recall 0. Hay que usar recall, precision, F1 o PR.'],
+['Métricas','Al bajar el umbral de clasificación, el recall no disminuye y la precision tiende a bajar.',true,'Se predicen más positivos: TP no baja (recall sube o igual) y entran más FP (precision baja).'],
+['Métricas','Un AUC de 0,5 indica un modelo perfecto.',false,'AUC = 0,5 es el azar (la diagonal). El modelo perfecto tiene AUC = 1.'],
+['Métricas','La curva ROC grafica precision contra recall.',false,'La ROC grafica TPR (eje Y) contra FPR (eje X). Precision vs recall es la curva PR.'],
+['Métricas','Con clases muy desbalanceadas, la curva Precision-Recall es más informativa que la ROC.',true,'La ROC usa los TN y con muchos negativos el FPR queda chico aunque haya muchas falsas alarmas; la PR se centra en la clase positiva.'],
+['Métricas','El F1 es la media aritmética de precision y recall.',false,'Es la media armónica: 2PR/(P+R). Castiga que una de las dos sea baja.'],
+['Métricas','Si el costo de un falso negativo es mayor que el de un falso positivo, conviene subir el umbral.',false,'Conviene BAJARLO: acepto más FP para evitar FN y gano recall.'],
+['Métricas','Evaluar un modelo sobre el mismo conjunto con que se entrenó da una estimación honesta del error de test.',false,'Es optimista (el modelo ya vio esos datos). Hay que usar validación/test o CV.'],
+['Métricas','Recall = TP/(TP+FN).',true,'Proporción de positivos reales que el modelo detecta (TPR, sensibilidad).'],
+['Métricas','Precision = TP/(TP+FN).',false,'Esa es la fórmula de recall. Precision = TP/(TP+FP).'],
+['Árboles','En un árbol de clasificación, cada hoja predice la moda de las observaciones de entrenamiento de esa región.',true,'En regresión predice la media.'],
+['Árboles','El recursive binary splitting es greedy porque elige el mejor corte de cada paso sin considerar los cortes futuros.',true,'Es top-down y greedy: no garantiza el árbol óptimo global.'],
+['Árboles','Un nodo puro tiene un índice de Gini igual a 0,5.',false,'Un nodo puro tiene G = 0. G = 0,5 es el máximo para dos clases (mitad y mitad).'],
+['Árboles','Para elegir un corte con TGI se elige el de mayor TGI.',false,'Se elige el de MENOR TGI (hojas más puras). Con ganancia de información, el de MAYOR IG.'],
+['Árboles','Los árboles de decisión son muy robustos: un cambio chico en los datos casi no cambia el árbol.',false,'Son poco robustos: alta varianza. Un cambio chico puede cambiar mucho el árbol.'],
+['Árboles','El post-pruning crece un árbol grande y lo poda minimizando RSS + α·|T|, con α elegido por cross-validation.',true,'α = 0 deja el árbol completo; al subir α el árbol se achica.'],
+['Árboles','El error de entrenamiento de un árbol sube al agregar hojas.',false,'Baja siempre. Lo que hace una U es el error de CV/test.'],
+['Árboles','En un árbol de regresión cada hoja predice la media de la variable respuesta de las observaciones de entrenamiento en esa región.',true,'Y se eligen los cortes que minimizan el RSS.'],
+['Árboles','Un nodo con una sola observación pesa igual que uno de 50 al calcular el TGI.',false,'El TGI pondera por n_h/n: una hoja chica pesa menos.'],
+['Random Forest','En Random Forest todos los árboles se entrenan sobre exactamente la misma muestra completa.',false,'Cada árbol usa una muestra bootstrap distinta (con reemplazo).'],
+['Random Forest','En Random Forest se elige un subconjunto aleatorio de m predictores en cada nodo (no una vez por árbol).',true,'m ≈ √p. Decorrelaciona los árboles.'],
+['Random Forest','Random Forest reduce la varianza respecto de un único árbol.',true,'Promediar muchos árboles decorrelacionados baja la varianza sin subir el sesgo.'],
+['Random Forest','Cada árbol de un Random Forest se poda para evitar el overfitting.',false,'Se usan árboles grandes sin podar; es el promedio el que baja la varianza.'],
+['Random Forest','Aproximadamente un tercio de las observaciones queda fuera de cada muestra bootstrap (out-of-bag).',true,'P(no salir) = (1−1/n)ⁿ → 1/e ≈ 0,368.'],
+['Random Forest','En Random Forest los árboles se construyen en secuencia y cada uno corrige los errores del anterior.',false,'Eso es boosting (AdaBoost). En RF los árboles son independientes y en paralelo.'],
+['Random Forest','Agregar más árboles a un Random Forest tiende a producir overfitting.',false,'El error se estabiliza; más árboles no sobreajustan por sí mismos.'],
+['AdaBoost','AdaBoost combina clasificadores débiles (stumps) mediante un voto ponderado por α.',true,'F(x) = Σ α_b·f_b(x); la predicción es el signo de F.'],
+['AdaBoost','En AdaBoost, los pesos de las observaciones bien clasificadas aumentan en cada iteración.',false,'Bajan (w·e^−α). Los MAL clasificados suben (w·e^α) para que el próximo stump se concentre en ellos.'],
+['AdaBoost','Un stump con error ponderado ε = 0,5 recibe α = 0.',true,'α = ½·ln((1−ε)/ε) = 0: no mejora al azar y no vota.'],
+['AdaBoost','Un stump con ε > 0,5 tiene α negativo, por lo que su voto se invierte.',true,'Es peor que el azar; con α < 0 su voto cuenta al revés.'],
+['AdaBoost','En AdaBoost todos los stumps votan con el mismo peso.',false,'Cada stump vota con su α: más voz cuanto menor es su error.'],
+['AdaBoost','Después de normalizar, los pesos de las observaciones mal clasificadas suman 0,5.',true,'Vale para cualquier ε cuando α = ½·ln((1−ε)/ε).'],
+['AdaBoost','AdaBoost entrena sus stumps en paralelo e independientes entre sí.',false,'Es secuencial: el orden importa porque cada stump depende de los errores del anterior.'],
+['AdaBoost','AdaBoost suele reducir principalmente el sesgo, mientras que Random Forest reduce principalmente la varianza.',true,'Los stumps tienen alto sesgo y el boosting lo reduce; el bagging/RF atacan la varianza.'],
+['Regresión','El método de mínimos cuadrados minimiza la suma de los residuos.',false,'Minimiza la suma de los residuos AL CUADRADO (RSS).'],
+['Regresión','Un R² alto implica que la relación es causal.',false,'R² mide varianza explicada, no causalidad.'],
+['Regresión','Con multicolinealidad, los errores estándar de los coeficientes se inflan y las estimaciones se vuelven inestables.',true,'Se detecta con VIF (> 5–10). Remedio: sacar o combinar variables, PCA.'],
+['Regresión','Agregar una variable a una regresión lineal múltiple nunca baja el R² (en la muestra de entrenamiento).',true,'Por eso se usa el R² ajustado, que penaliza variables inútiles.'],
+['Regresión','En una regresión múltiple, β_j es el cambio esperado en Y por +1 en X_j manteniendo fijas las demás variables.',true,'Esa es la interpretación “ceteris paribus”.'],
+['Regresión','Un p-valor grande en el test t de β₁ es evidencia de una relación significativa entre X e Y.',false,'p-valor CHICO → rechazo H₀: β₁ = 0 → hay evidencia de relación.'],
+['Regresión','El intervalo de predicción de un valor individual es más angosto que el intervalo de confianza de la media.',false,'Es más ancho: suma la variabilidad irreducible Var(ε).'],
+['PCA','PCA se aplica incluyendo la variable objetivo para que las componentes expliquen mejor Y.',false,'PCA es no supervisado: se excluyen el target y los ID.'],
+['PCA','Con p variables, PCA puede generar como máximo p componentes principales.',true,'Y son ortogonales entre sí.'],
+['PCA','PCA capta cualquier tipo de relación no lineal entre las variables.',false,'Solo capta estructura lineal (direcciones de máxima varianza).'],
+['PCA','Los autovalores de la matriz de covarianzas miden la varianza explicada por cada componente.',true,'PVE = λ_m/Σλ; las autovectores dan la dirección (loadings).'],
+['PCA','Antes de PCA conviene estandarizar las variables cuando están en escalas distintas.',true,'Si no, las variables de mayor escala dominan las primeras componentes.'],
+['Clustering','K-Means requiere fijar el número de grupos K de antemano.',true,'K se elige con el codo (WCSS) o la silueta.'],
+['Clustering','K-Means es robusto a los outliers porque usa la mediana.',false,'Usa el promedio (centroide): los outliers desplazan los centroides.'],
+['Clustering','DBSCAN requiere indicar K y solo encuentra grupos esféricos.',false,'No requiere K, encuentra formas arbitrarias y marca el ruido. Requiere ε y MinPts.'],
+['Clustering','GMM produce una asignación probabilística (soft clustering).',true,'Cada punto tiene P(C_k | x_i); se ajusta con EM.'],
+['Clustering','En el clustering jerárquico se corta el dendrograma a una altura para obtener los grupos.',true,'No hace falta definir K de antemano.'],
+['Clustering','El aprendizaje no supervisado necesita una variable respuesta etiquetada.',false,'Justamente no la tiene: busca estructura (clustering, PCA).'],
+['Feature Eng.','Imputar faltantes con la media calculada sobre todo el dataset (incluido test) es una práctica correcta.',false,'Es data leakage: las estadísticas se calculan solo con train.'],
+['Feature Eng.','Aplicar logaritmo a una variable con cola larga (ej. monto de siniestros) reduce la asimetría.',true,'Acerca la distribución a una forma más simétrica y atenúa outliers.'],
+['Feature Eng.','Los árboles de decisión necesitan que las variables numéricas estén estandarizadas.',false,'Los cortes dependen del orden, no de la escala. Sí hace falta para K-Means, PCA, KNN.'],
+['IA','Según Gutterman, la IA puede reemplazar el juicio actuarial porque procesa más datos.',false,'La IA procesa patrones del pasado pero no reemplaza el juicio: identificar el problema, evaluar datos y razonabilidad.'],
+['IA','“The data is not the data”: los datos históricos no son neutrales y reflejan desigualdades pasadas.',true,'Por eso los proxies (ZIP code, etc.) pueden reproducir discriminación.'],
+['IA','En el juego de la imitación de Turing, el interrogador juzga solo por mensajes escritos.',true,'Separa lo intelectual de lo físico.'],
+['IA','Las ASOPs son un techo: cumplirlas alcanza para actuar éticamente frente a la IA.',false,'Son un piso, no un techo.'],
+['IA','Lee-Carter captura bien los saltos abruptos (step-changes) en la mortalidad.',false,'Asume tendencias estables; no captura saltos ni mejoras desiguales. Por eso se integra ML + híbridos + XAI.'],
+['IA','RAG (Retrieval Augmented Generation) permite al modelo acceder a documentos para dar respuestas más precisas.',true,'Recupera información externa/interna antes de generar.']
+].map((r,i)=>({id:i,tema:r[0],q:r[1],a:r[2],why:r[3],real:!!r[4]}));
+
+/* ============ PRNG + GENERADOR ============ */
+function rng(seed){
+  let a=seed>>>0; const next=()=>{a=(a+0x6D2B79F5)|0; let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return((t^(t>>>14))>>>0)/4294967296;};
+  return {next,int:(lo,hi)=>lo+Math.floor(next()*(hi-lo+1)),pick:arr=>arr[Math.floor(next()*arr.length)],shuffle:arr=>{arr=arr.slice(); for(let i=arr.length-1;i>0;i--){const j=Math.floor(next()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];} return arr;}};
+}
+const pre=t=>`<pre class="ans">${esc(t)}</pre>`;
+const blk=(title,pts,q,a)=>`<div class="card"><div class="lbl">${title} (${pts} Pts.)</div>${q}<div class="row"><button class="btn g tg" type="button">Ver resolución</button></div><div class="gen-sol" style="display:none">${a}</div></div>`;
+
+function genE1(R){
+  const thr=R.pick([0.5,0.6,0.7,0.4,0.55,0.35]), k=R.pick([5,10,20]); let sc,ys;
+  for(;;){const n=R.int(5,7), set=new Set(); while(set.size<n){const v=R.int(5,95)/100; if(Math.abs(v-thr)>1e-9) set.add(v);} sc=R.shuffle([...set]); ys=sc.map(()=>R.next()<.45?1:0); const p=sum(ys); if(p>=2&&sc.length-p>=2) break;}
+  const data=sc.map((s,i)=>({y:ys[i],s}));
+  let q=`<p>Un banco utiliza un modelo para predecir si un cliente caerá o no en mora (1 = sí, 0 = no):</p><div class="tw"><table class="t"><tr><th>ID</th><th>Y_TRUE</th><th>Y_PRED</th></tr>${data.map((d,i)=>`<tr><td>${i+1}</td><td>${d.y}</td><td>${f(d.s,2)}</td></tr>`).join('')}</table></div>
+  <ol><li>Calculá la matriz de confusión para un threshold de ${f(thr,2)}.</li><li>Con la matriz del ítem anterior, calculá accuracy, precisión y recall.</li><li>Si el costo de un falso negativo (no detectar morosos) es ${k} veces mayor que el de un falso positivo, ¿qué deberías hacer con el threshold?</li><li>¿A qué métrica le darías más importancia en este caso? ¿Por qué?</li><li>Si quisieras representar la relación entre TPR y FPR, ¿qué curva utilizarías? ¿Por qué?</li></ol>`;
+  const c=confusion(data,thr), cost=k*c.FN+c.FP, best=bestThreshold(data,1,k), cv=curve(data), auc=aucTrap(cv.pts);
+  let T=`1) Clasificación con threshold ${f(thr,2)} (predicho 1 si Y_PRED ≥ ${f(thr,2)}):\n`+data.map((d,i)=>{const p=d.s>=thr?1:0; return `   ID ${i+1}: Y_TRUE=${d.y}  Y_PRED=${f(d.s,2)} → predice ${p} → ${d.y===1&&p===1?'TP':d.y===0&&p===1?'FP':d.y===0&&p===0?'TN':'FN'}`;}).join('\n')+'\n\n'+(function(){const L=solveMetricsText(data,thr,1,k).split('\n'); return L.slice(2,5).join('\n')+'\n\n2) Métricas:\n'+L.slice(6).join('\n');})();
+  T+=`\n\n3) Con C_FN = ${k}·C_FP conviene BAJAR el threshold: se acepta más FP para ganar recall.\n   Umbral teórico t* = C_FP/(C_FP+C_FN) = 1/(1+${k}) = ${f(1/(1+k),3)}.\n   En esta muestra: costo con t=${f(thr,2)} = ${k}·${c.FN} + 1·${c.FP} = ${cost}; el mínimo es ${best.t===Infinity?'no predecir ninguno':'con t = '+f(best.t,2)} (costo ${best.cost}, FN=${best.c.FN}, FP=${best.c.FP}).`;
+  T+=`\n\n4) RECALL = TP/(TP+FN): el error caro es no detectar un moroso (FN). Accuracy no sirve (no distingue costos y\n   se engaña con desbalance). Precision se vigila para no inundar de falsas alarmas.`;
+  T+=`\n\n5) Curva ROC: TPR = TP/(TP+FN) (eje Y) vs FPR = FP/(FP+TN) (eje X) para todos los thresholds; muestra el\n   trade-off sin fijar un umbral. Puntos (FPR; TPR): ${cv.pts.map(p=>`(${f(p.fpr,2)}; ${f(p.tpr,2)})`).join(' ')}\n   AUC = ${f(auc)}. El punto del threshold ${f(thr,2)} es (${f(metr(c).fpr,2)}; ${f(metr(c).rec,2)}).`;
+  return {q,a:pre(T)};
+}
+function genE2(R){
+  const items=R.shuffle(VFB).slice(0,5);
+  const q=`<p>Verdadero o Falso. Justificá brevemente tu elección.</p><ol>${items.map(x=>`<li>${esc(x.q)}</li>`).join('')}</ol>`;
+  return {q,a:pre(items.map((x,i)=>`${i+1}. ${x.a?'VERDADERO':'FALSO'}. ${x.why}`).join('\n'))};
+}
+const POOL=[
+ {n:'Edad del conductor',op:'<',thr:25,lo:19,hi:60,u:' años'},{n:'Tuvo siniestros previos',bin:1},{n:'Antigüedad del vehículo',op:'>',thr:10,lo:0,hi:18,u:' años'},
+ {n:'Kilómetros anuales',op:'>',thr:20000,lo:5000,hi:40000,st:1000,u:' km'},{n:'Uso comercial del vehículo',bin:1},{n:'Antigüedad de licencia',op:'<',thr:3,lo:0,hi:20,u:' años'},
+ {n:'Vive en zona de alto robo',bin:1},{n:'Multas en el último año',op:'>',thr:2,lo:0,hi:6,u:''}];
+function genE3(R){
+  const AL=[0.973,1.28,0.92,1,1.2,0.5,0.7,0.35,1.5,0.85,1.1];
+  let sel,vals,fx,S;
+  for(;;){
+    sel=R.shuffle(POOL).slice(0,6).map(p=>Object.assign({},p,{a:R.pick(AL)}));
+    vals=sel.map(p=>p.bin?R.pick(['Sí','No']):(R.int(p.lo/(p.st||1),p.hi/(p.st||1))*(p.st||1)));
+    fx=sel.map((p,i)=>p.bin?(vals[i]==='Sí'?1:-1):(p.op==='<'?(vals[i]<p.thr?1:-1):(vals[i]>p.thr?1:-1)));
+    S=sum(sel.map((p,i)=>p.a*fx[i])); if(Math.abs(S)>0.05&&new Set(fx).size>1) break;
+  }
+  const cond=p=>p.bin?p.n:`${p.n} ${p.op} ${p.thr.toLocaleString('es-AR')}${p.u&&p.u.trim()==='años'?' años':''}`;
+  const val=(p,i)=>p.bin?vals[i]:`${vals[i].toLocaleString('es-AR')}${p.u===' años'&&vals[i]===1?' año':(p.u||'')}`;
+  const q=`<p>Una compañía de seguros de automotores utiliza AdaBoost para clasificar a sus asegurados según el riesgo de presentar un siniestro durante el próximo año. El modelo contiene 6 clasificadores débiles (decision stumps), con pesos α<sub>m</sub>. Clases: +1 = riesgo alto; −1 = riesgo bajo.</p>
+  <div class="tw"><table class="t"><tr><th>Stump</th><th>Condición</th><th>Cumple</th><th>No cumple</th><th class="n">α<sub>m</sub></th></tr>${sel.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(cond(p))}</td><td>+1</td><td>−1</td><td class="n">${f(p.a)}</td></tr>`).join('')}</table></div>
+  <p><b>Datos del asegurado:</b> ${sel.map((p,i)=>`${esc(p.n)}: <b>${esc(val(p,i))}</b>`).join(' · ')}</p>
+  <ol><li>Determiná la clasificación (+1 o −1) de cada uno de los 6 stumps.</li><li>Calculá el voto ponderado de cada clasificador con su peso α<sub>m</sub>.</li><li>Calculá la suma ponderada.</li><li>Determiná si el asegurado se clasifica como de riesgo alto o bajo de siniestro.</li></ol>`;
+  const T=`1) Clasificación de cada stump (cumple → +1, no cumple → −1):\n`+sel.map((p,i)=>`   Stump ${i+1}: ${cond(p)} | dato = ${val(p,i)} → ${fx[i]>0?'cumple':'no cumple'} → f${i+1} = ${fx[i]>0?'+1':'−1'}`).join('\n')+`\n\n2) Voto ponderado α_m·f_m(x):\n   ${sel.map((p,i)=>`${fx[i]>0?'+':'−'}${f(p.a)}`).join('   ')}\n\n3) F(x) = Σ α_m·f_m(x) = ${sel.map((p,i)=>`${fx[i]>0?'+':'−'}${f(p.a)}`).join(' ')} = ${S<0?'−':''}${f(Math.abs(S))}\n\n4) Predicción = signo(F(x)) = ${S>0?'+1':'−1'} → riesgo ${S>0?'ALTO':'BAJO'} de siniestro.\n   Interpretación: votos a "alto" = ${f(sum(sel.map((p,i)=>fx[i]>0?p.a:0)))}, votos a "bajo" = ${f(sum(sel.map((p,i)=>fx[i]<0?p.a:0)))}; gana "${S>0?'alto':'bajo'}" por ${f(Math.abs(S))}.`;
+  return {q,a:pre(T)};
+}
+const FPAIRS=[['Historial_Reclamos','Poliza_Vida'],['Tiene_Deudas','Es_Joven'],['Uso_Comercial','Zona_Urbana'],['Denuncias_Previas','Cliente_Antiguo']];
+function genE4(R){
+  const pair=R.pick(FPAIRS), header=[pair[0],pair[1],'Riesgo_Alto']; let rows,r;
+  for(let tries=0;tries<500;tries++){
+    rows=Array.from({length:7},()=>[R.pick(['Si','No']),R.pick(['Si','No']),R.pick(['Si','No'])]);
+    const t=rows.map(x=>x[2]); if(new Set(t).size<2||new Set(rows.map(x=>x[0])).size<2||new Set(rows.map(x=>x[1])).size<2) continue;
+    r=splitText(rows,[0,1],2,header,'g'); const ws=r.all.map(e=>e.w).sort((a,b)=>a-b); if(ws.length===2&&ws[1]-ws[0]>=0.03&&r.best.gi.every(g=>g.n>=2)){
+      const oth=[0,1].filter(c=>c!==r.best.col), imps=r.best.gi.filter(g=>g.imp>1e-12);
+      if(tries>=300||imps.some(g=>!treeLines(g.rows,oth,2,r.classes,'g',header,'')[0].startsWith('→ HOJA'))) break;
+    }
+  }
+  const q=`<p>Considerá la siguiente tabla cuya variable target es Riesgo_Alto (de cometer fraude):</p><div class="tw"><table class="t"><tr>${header.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(x=>`<tr>${x.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</table></div>
+  <ol><li>Realizá todos los cálculos necesarios para decidir cuál será la raíz del árbol utilizando el Índice de Gini.</li><li>Describí brevemente cómo sería el procedimiento para continuar en la construcción del árbol.</li><li>Comentá en qué casos sería considerable recurrir al procedimiento de Pruning.</li></ol>`;
+  const best=r.best, tl=treeLines(rows,[0,1],2,r.classes,'g',header,'');
+  let T=`1)\n`+r.text+`\n\n2) Continuación (recursive binary splitting, top-down y greedy):\n`;
+  best.gi.forEach(g=>{
+    const pure=g.imp<1e-12, other=[0,1].filter(c=>c!==best.col), sub=pure?null:treeLines(g.rows,other,2,r.classes,'g',header,''), leafy=sub&&sub[0].startsWith('→ HOJA');
+    T+=`   - ${header[best.col]} = ${g.name}: ${fl(g.n)} (${r.classes.map((c,i)=>`${g.cn[i]} ${c}`).join(', ')}) → ${pure?'nodo puro, HOJA: '+r.classes[g.cn.indexOf(Math.max(...g.cn))]:(leafy?'impuro, pero ninguna variable restante reduce la impureza → HOJA por moda':'impuro: se repite el proceso con SUS filas y la variable restante')}\n`;});
+  T+=`   Árbol resultante:\n`+tl.map(x=>'   '+x).join('\n')+`\n   Se corta con nodo puro, sin variables, o por criterio de parada (profundidad, mínimo de observaciones, mejora mínima). Cada hoja predice la moda.\n\n3) Pruning: cuando el árbol queda muy grande y hace overfitting (error de entrenamiento ≈ 0 y error de test/CV alto),\n   con hojas de muy pocas observaciones (como este árbol de 7 filas) o muchas variables ruidosas. Post-pruning:\n   crecer el árbol y podar minimizando RSS(T) + α·|T|, con α elegido por validación cruzada. Resultado: menos varianza\n   y árbol más simple.`;
+  return {q,a:pre(T)};
+}
+let genSeed=Math.floor(Math.random()*90000)+1000, genType='exam';
+function genRender(){
+  const out=$('#gen-out'); $('#gen-seed').textContent='Semilla: '+genSeed; $('#gen-seedin').value=genSeed;
+  $$('#gen-types button').forEach(b=>{b.className='btn'+(b.dataset.g===genType?'':' g');});
+  const R=rng(genSeed); let h='';
+  if(genType==='exam'){
+    const s=[R.int(1,1e9),R.int(1,1e9),R.int(1,1e9),R.int(1,1e9)];
+    h+=`<div class="card key"><div class="lbl">Parcial nuevo · 100 pts</div><p style="margin:0">Para el 4 hace falta 60% correcto y completo. Usá notación de clase, resolvé e interpretá. Resolvé en papel y recién después abrí la resolución.</p></div>`;
+    const e1=genE1(rng(s[0])), e2=genE2(rng(s[1])), e3=genE3(rng(s[2])), e4=genE4(rng(s[3]));
+    h+=blk('Ejercicio 1',20,e1.q,e1.a)+blk('Ejercicio 2',20,e2.q,e2.a)+blk('Ejercicio 3',30,e3.q,e3.a)+blk('Ejercicio 4',30,e4.q,e4.a);
+  } else {
+    const map={e1:[genE1,'Ejercicio 1',20],e2:[genE2,'Ejercicio 2',20],e3:[genE3,'Ejercicio 3',30],e4:[genE4,'Ejercicio 4',30]}, g=map[genType], e=g[0](R);
+    h+=blk(g[1],g[2],e.q,e.a);
+  }
+  out.innerHTML=h;
+}
+$('#gen-types').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; genType=b.dataset.g; genRender();});
+$('#gen-new').addEventListener('click',()=>{genSeed=Math.floor(Math.random()*90000)+1000; genRender();});
+$('#gen-set').addEventListener('click',()=>{const v=parseInt($('#gen-seedin').value,10); if(isFinite(v)){genSeed=v; genRender();}});
+$('#gen-out').addEventListener('click',e=>{const b=e.target.closest('.tg'); if(!b) return; const sol=b.closest('.card').querySelector('.gen-sol'); const open=sol.style.display==='none'; sol.style.display=open?'block':'none'; b.textContent=open?'Ocultar resolución':'Ver resolución'; if(open) addCopy(sol);});
+
+/* ============ ENTRENADOR V/F ============ */
+let vfQ=[], vfI=0, vfN=0, vfOk=0, vfAnswered=false;
+function vfStat(){const w=store.get('cca_vf_wrong',[]); $('#vf-stat').textContent=(vfQ.length?`Pregunta ${Math.min(vfI+1,vfQ.length)} de ${vfQ.length} · `:'')+`aciertos ${vfOk}/${vfN} · falladas guardadas: ${w.length}`;}
+function vfStart(mode){
+  const tema=$('#vf-tema').value; let pool=VFB.filter(x=>tema==='Todos'||x.tema===tema);
+  if(mode==='wrong'){const w=store.get('cca_vf_wrong',[]); pool=VFB.filter(x=>w.includes(x.id)&&(tema==='Todos'||x.tema===tema));}
+  const card=$('#vf-card');
+  if(!pool.length){card.innerHTML='<p class="mut">No hay preguntas para ese filtro. '+(mode==='wrong'?'¡No tenés falladas guardadas!':'')+'</p>'; vfQ=[]; vfStat(); return;}
+  pool=pool.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]); if(mode==='exam') pool=pool.slice(0,5);
+  vfQ=pool; vfI=0; vfN=0; vfOk=0; vfShow();
+}
+function vfShow(){
+  const card=$('#vf-card'); vfAnswered=false;
+  if(vfI>=vfQ.length){card.innerHTML=`<div class="lbl">Resultado</div><p class="big"><b>${vfOk} de ${vfN}</b> correctas (${f(vfOk/Math.max(1,vfN)*100,0)}%).</p><div class="row"><button class="btn" id="vf-again" type="button">Repetir</button></div>`; $('#vf-again').onclick=()=>vfStart('all'); vfStat(); return;}
+  const q=vfQ[vfI];
+  card.innerHTML=`<span class="pill">${esc(q.tema)}</span>${q.real?'<span class="pill on">★ del parcial real</span>':''}<p class="vf-q">${esc(q.q)}</p><div class="row"><button class="btn ok" data-v="1" type="button">Verdadero</button><button class="btn no" data-v="0" type="button">Falso</button></div><div id="vf-fb"></div>`;
+  vfStat();
+}
+$('#vf-card').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.id==='vf-next'){vfI++; vfShow(); return;}
+  if(b.dataset.v===undefined||vfAnswered) return;
+  vfAnswered=true; const q=vfQ[vfI], ok=(b.dataset.v==='1')===q.a; vfN++; if(ok) vfOk++;
+  let w=store.get('cca_vf_wrong',[]); if(!ok&&!w.includes(q.id)) w.push(q.id); if(ok) w=w.filter(x=>x!==q.id); store.set('cca_vf_wrong',w);
+  $('#vf-fb').innerHTML=`<div class="card ${ok?'good':'bad'}" style="margin-top:12px"><div class="lbl">${ok?'✔ Correcto':'✘ Incorrecto'} · la afirmación es ${q.a?'VERDADERA':'FALSA'}</div><p style="margin:0">${esc(q.why)}</p></div><button class="btn" id="vf-next" type="button">${vfI+1>=vfQ.length?'Ver resultado':'Siguiente'}</button>`;
+  vfStat();
+});
+$('#vf-exam').addEventListener('click',()=>vfStart('exam')); $('#vf-all').addEventListener('click',()=>vfStart('all')); $('#vf-wrong').addEventListener('click',()=>vfStart('wrong'));
+(function(){const temas=['Todos',...new Set(VFB.map(x=>x.tema))]; $('#vf-tema').innerHTML=temas.map(t=>`<option>${t}</option>`).join('');})();
+
+/* ============ BÚSQUEDA TEORÍA ============ */
+$('#teo-q').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase(); $$('details.theo').forEach(d=>{const hit=!q||d.textContent.toLowerCase().includes(q); d.style.display=hit?'':'none'; if(q&&hit) d.open=true;});});
+
+/* ============ INIT ============ */
+addCopy(document);
+avBuild(AV_DEF); giRefreshTargets(); giGo(); renderMetrics(); apRender(); rgRender(); pcRender(); kmRun(); genRender(); vfStat();
+showTab((location.hash||'').slice(1)||'exam');
+})();
+</script></body></html>
